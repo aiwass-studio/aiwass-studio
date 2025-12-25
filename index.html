@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMA VISUAL STUDIOS | Directing Digital Chaos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            daez: {
+              paper: '#F2EFE9', // Bone white/Old paper
+              ink: '#121212',   // Soft black
+              blood: '#2CFF05', // Neon Green (replaces Red)
+              rust: '#8B3A18',  // Secondary rusty orange
+              charcoal: '#2A2A2A'
+            }
+          },
+          fontFamily: {
+            display: ['"Anton"', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+            serif: ['"Times New Roman"', 'serif'], // For that classic horror feel
+          },
+          backgroundImage: {
+            'halftone-sm': 'radial-gradient(circle, #121212 1px, transparent 1.5px)',
+            'halftone-lg': 'radial-gradient(circle, #121212 2px, transparent 2.5px)',
+            'paper-texture': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
+          },
+          animation: {
+            'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+            'flicker': 'flicker 2s infinite',
+            'noise': 'noise 0.5s steps(5) infinite',
+            'spin-slow': 'spin 12s linear infinite',
+            'marquee': 'marquee 20s linear infinite',
+          },
+          keyframes: {
+            shake: {
+              '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+              '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+              '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+              '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+            },
+            flicker: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.8' },
+              '52%': { opacity: '0.2' },
+              '54%': { opacity: '1' },
+            },
+            noise: {
+              '0%': { transform: 'translate(0, 0)' },
+              '10%': { transform: 'translate(-5%, -5%)' },
+              '20%': { transform: 'translate(-10%, 5%)' },
+              '30%': { transform: 'translate(5%, -10%)' },
+              '40%': { transform: 'translate(-5%, 15%)' },
+              '50%': { transform: 'translate(-10%, 5%)' },
+              '60%': { transform: 'translate(15%, 0)' },
+              '70%': { transform: 'translate(0, 10%)' },
+              '80%': { transform: 'translate(-15%, 0)' },
+              '90%': { transform: 'translate(10%, 5%)' },
+              '100%': { transform: 'translate(5%, 0)' }
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    /* Hide default cursor to use custom one */
+    body {
+      cursor: none;
+      background-color: #F2EFE9;
+      color: #121212;
+      overflow-x: hidden;
+    }
+
+    /* SVG Filter Utility Classes */
+    .filter-ink {
+      filter: url(#ink-bleed);
+    }
+
+    .filter-noise {
+      filter: url(#noise);
+    }
+
+    .filter-halftone {
+      filter: contrast(150%) grayscale(100%);
+    }
+
+    /* Blend Modes for Print Look */
+    .blend-multiply {
+      mix-blend-mode: multiply;
+    }
+
+    .blend-screen {
+      mix-blend-mode: screen;
+    }
+
+    /* Typography Textures */
+    .text-distress {
+      background: url('https://www.transparenttextures.com/patterns/black-felt.png');
+      -webkit-background-clip: text;
+      color: rgba(18, 18, 18, 0.9);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F2EFE9;
+      border-left: 1px solid #121212;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #2CFF05;
+      border: 2px solid #F2EFE9;
+    }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react/": "https://esm.sh/react@18.2.0/",
+        "react-dom": "https://esm.sh/react-dom@18.2.0",
+        "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client"
+      }
+    }
+    </script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body>
+  <!-- SVG Filters Definition -->
+  <svg style="display: none;">
+    <defs>
+      <filter id="ink-bleed">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+      </filter>
+      <filter id="paper-roughness">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
+        <feDiffuseLighting in="noise" lighting-color="#F2EFE9" surfaceScale="2">
+          <feDistantLight azimuth="45" elevation="60" />
+        </feDiffuseLighting>
+      </filter>
+    </defs>
+  </svg>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
