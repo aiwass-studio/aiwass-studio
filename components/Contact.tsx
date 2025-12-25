@@ -168,8 +168,16 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
                                     transition={{ delay: 0.4 }}
                                 >
                                     <h4 className="font-mono text-xs uppercase font-bold mb-3 text-daez-blood">{t.footerCopyright}</h4>
-                                    <p className="font-mono text-xs">{t.footerCopy}</p>
-                                    <p className="font-serif italic text-[9px] mt-2 opacity-60">{t.footerQuote}</p>
+                                    <div className="flex items-center gap-4">
+                                        <div>
+                                            <p className="font-mono text-xs">{t.footerCopy}</p>
+                                            <p className="font-serif italic text-[9px] mt-2 opacity-60">{t.footerQuote}</p>
+                                        </div>
+                                        {/* Mobile-only stamp */}
+                                        <div className="block md:hidden w-20 h-20 flex-shrink-0 rotate-[-12deg] opacity-70 mix-blend-multiply">
+                                            <img src="/assets/stamp.svg" alt="Official Stamp" className="w-full h-full object-contain" />
+                                        </div>
+                                    </div>
                                 </motion.div>
                             </div>
                         </div>
