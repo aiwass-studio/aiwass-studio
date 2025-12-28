@@ -22,6 +22,35 @@ function App() {
 
   const t = translations[language];
 
+  const [isHeroVisible, setIsHeroVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    if (loading) return;
+
+    const navElement = document.querySelector('nav');
+    const handleScroll = () => {
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        const rect = heroSection.getBoundingClientRect();
+        // Check if hero is substantially visible (e.g. bottom is still in upper part of screen)
+        // Or simpler: if scrollY is less than hero height for instance.
+        // Actually user said "while view is in hero". IntersectionObserver is better.
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 } // 10% visible constitutes "in hero"
+    );
+
+    const hero = document.getElementById('hero');
+    if (hero) observer.observe(hero);
+
+    return () => observer.disconnect();
+  }, [loading]);
+
   return (
     <>
       <AnimatePresence mode="wait">
@@ -50,8 +79,27 @@ function App() {
           <nav className="fixed top-[34px] lg:top-12 left-0 w-full z-40 px-6 py-6 flex justify-between items-center pointer-events-none">
             {/* Backdrop blur only on mobile, positioned flush with black strip */}
             <div className="absolute inset-0 bg-daez-paper/80 backdrop-blur-sm -z-10 lg:hidden"></div>
-            <div className="pointer-events-auto cursor-none z-50">
-              <img src="/assets/Ema-logo.svg" alt="EMA" className="h-10 w-auto" />
+
+            {/* Logo Container */}
+            <div className="pointer-events-auto cursor-none z-50 relative h-10 flex items-center">
+              {/* Mobile Layer: Simple Static Logo */}
+              <img src="/assets/Ema-logo.svg" alt="EMA" className="h-10 w-auto lg:hidden" />
+
+              {/* Desktop Layer: Scroll Switcher */}
+              <div className="hidden lg:block relative h-10 w-auto">
+                {/* Primary Logo (Hero) */}
+                <img
+                  src="/assets/Ema-logo.svg"
+                  alt="EMA"
+                  className={`h-10 w-auto transition-opacity duration-300 ${isHeroVisible ? 'opacity-100' : 'opacity-0'}`}
+                />
+                {/* Secondary Logo (Scrolled) */}
+                <img
+                  src="/assets/logo-ema3-hover.png"
+                  alt="EMA"
+                  className={`h-10 w-auto transition-opacity duration-300 absolute top-0 left-0 ${!isHeroVisible ? 'opacity-100' : 'opacity-0'}`}
+                />
+              </div>
             </div>
 
             <div className="flex items-center gap-4 pointer-events-auto">
