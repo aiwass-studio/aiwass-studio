@@ -28,7 +28,22 @@ const Skills: React.FC<SkillsProps> = ({ language }) => {
 
     return (
         <section id="skills" className="py-24 px-4 md:px-12 bg-daez-ink text-daez-paper relative overflow-hidden">
-            <div className="max-w-6xl mx-auto">
+
+            {/* Video Background */}
+            <div className="absolute inset-0 z-0">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover opacity-50"
+                >
+                    <source src="/assets/videos/background-pattern.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-black opacity-[0.63]"></div>
+            </div>
+
+            <div className="max-w-6xl mx-auto relative z-10">
                 <SectionHeader title={t.title} subtitle={t.subtitle} inverse />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 mt-16">

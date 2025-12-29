@@ -84,9 +84,9 @@ export const StickyCTA: React.FC<StickyCTAProps> = ({ language }) => {
   );
 };
 
-export const SectionHeader: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => (
-  <div className="border-b-4 border-daez-ink pb-2 mb-16 flex flex-col md:flex-row justify-between items-end">
-    <h2 className="text-6xl md:text-9xl font-display text-daez-ink uppercase tracking-tighter leading-[0.8] filter-ink">
+export const SectionHeader: React.FC<{ title: string; subtitle: string; inverse?: boolean }> = ({ title, subtitle, inverse }) => (
+  <div className={`border-b-4 pb-2 mb-16 flex flex-col md:flex-row justify-between items-end ${inverse ? 'border-daez-paper' : 'border-daez-ink'}`}>
+    <h2 className={`text-6xl md:text-9xl font-display uppercase tracking-tighter leading-[0.8] filter-ink ${inverse ? 'text-daez-paper' : 'text-daez-ink'}`}>
       {title}
     </h2>
     <span className="font-mono text-daez-blood text-sm md:text-base mb-2 font-bold uppercase tracking-widest">

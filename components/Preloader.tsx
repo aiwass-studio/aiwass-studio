@@ -33,12 +33,26 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
 
     return (
         <motion.div
-            className="fixed inset-0 z-[9999] bg-daez-ink flex items-center justify-center"
+            className="fixed inset-0 z-[9999] bg-daez-ink flex items-center justify-center overflow-hidden"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <div className="relative w-64 h-64 flex items-center justify-center">
+            {/* Video Background */}
+            <div className="absolute inset-0 z-0">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover opacity-50"
+                >
+                    <source src="/assets/videos/background-pattern.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-black opacity-[0.63]"></div>
+            </div>
+
+            <div className="relative z-10 w-64 h-64 flex items-center justify-center">
                 <AnimatePresence mode="wait">
                     <motion.img
                         key={currentLogoIndex}

@@ -29,9 +29,23 @@ const Services: React.FC<ServicesProps> = ({ language }) => {
   ];
 
   return (
-    <section id="services" className="py-24 px-4 md:px-12 bg-daez-ink text-daez-paper relative border-y-8 border-double border-daez-paper">
+    <section id="services" className="py-24 px-4 md:px-12 bg-daez-ink text-daez-paper relative border-y-8 border-double border-daez-paper overflow-hidden">
 
-      <div className="max-w-6xl mx-auto">
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-50"
+        >
+          <source src="/assets/videos/background-pattern.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black opacity-[0.63]"></div>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <motion.h2
             className="font-display text-5xl md:text-7xl uppercase text-daez-blood tracking-tight"
@@ -57,7 +71,7 @@ const Services: React.FC<ServicesProps> = ({ language }) => {
           {services.map((service, index) => (
             <motion.div
               key={service.id}
-              className="border-2 border-daez-paper bg-daez-ink/50 hover:bg-daez-blood/10 transition-all duration-300 group cursor-none"
+              className="border-2 border-daez-paper bg-daez-ink hover:bg-daez-blood/10 transition-all duration-300 group cursor-none"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}

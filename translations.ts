@@ -83,7 +83,7 @@ export const translations = {
 
         // Skills Section
         skills: {
-            title: 'H E R R A M I E N T A S',
+            title: 'SKILLS & TOOLS',
             subtitle: 'Mi arsenal creativo y técnico',
             section1: 'HABILIDADES',
             section2: 'SOFTWARE',
@@ -243,7 +243,7 @@ export const translations = {
 
         // Skills Section
         skills: {
-            title: 'S K I L L S',
+            title: 'SKILLS & TOOLS',
             subtitle: 'My creative and technical arsenal',
             section1: 'SKILLS',
             section2: 'SOFTWARE',
