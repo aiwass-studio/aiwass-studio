@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { translations, Language } from '../translations';
+import { StaggeredText } from './StaggeredText';
+import { CSSParticlesBackground } from './CSSParticlesBackground';
 
 interface HeroProps {
   language: Language;
@@ -19,6 +22,9 @@ const Hero: React.FC<HeroProps> = ({ language }) => {
 
   return (
     <section id="hero" className="relative w-full min-h-screen flex flex-col justify-center items-center overflow-hidden bg-daez-paper border-b-4 border-daez-ink">
+
+      {/* CSS Particles Background - Lightweight alternative to Three.js */}
+      <CSSParticlesBackground />
 
       {/* Background Poster Image - The "Red Face" Vibe (Now Green) */}
       <div className="absolute inset-0 z-0">
@@ -54,14 +60,29 @@ const Hero: React.FC<HeroProps> = ({ language }) => {
         <div className="max-w-2xl relative">
 
 
-          <h1 className="font-display text-[12vw] md:text-[8vw] leading-[0.85] tracking-tighter text-daez-ink mix-blend-multiply filter-ink select-none mb-4">
-            {t.mainTitle1}
-            <span className="block text-daez-blood">{t.mainTitle2}</span>
-          </h1>
+          <StaggeredText
+            text={t.mainTitle1}
+            as="h1"
+            className="font-display text-[12vw] md:text-[8vw] leading-[0.85] tracking-tighter text-daez-ink mix-blend-multiply filter-ink select-none mb-4"
+            delay={0.3}
+            staggerDelay={0.1}
+          />
+          <StaggeredText
+            text={t.mainTitle2}
+            as="h1"
+            className="font-display text-[12vw] md:text-[8vw] leading-[0.85] tracking-tighter text-daez-blood mix-blend-multiply filter-ink select-none mb-4 block"
+            delay={0.8}
+            staggerDelay={0.12}
+          />
 
-          <div className="mt-8 font-mono text-sm md:text-lg font-bold tracking-widest text-daez-charcoal uppercase">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.5, ease: [0.25, 0.4, 0.25, 1] }}
+            className="mt-8 font-mono text-sm md:text-lg font-bold tracking-widest text-daez-charcoal uppercase"
+          >
             {t.subtitle}
-          </div>
+          </motion.div>
         </div>
 
 

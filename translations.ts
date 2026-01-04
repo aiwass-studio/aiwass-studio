@@ -45,10 +45,10 @@ export const translations = {
             title: 'QUÉ HAGO',
             subtitle: 'Especializado en crear narrativas visuales que rompen moldes',
             service1: {
-                title: 'BRANDING & DIRECCIÓN DE ARTE',
+                title: 'DIRECCIÓN CREATIVA & BRANDING',
                 subtitle: 'CREANDO UNIVERSOS',
                 desc: 'No hago logos sueltos, construyo sistemas visuales completos. Desarrollo de identidad desde el concepto hasta la implementación. El rostro de tu marca con una narrativa visual sólida.',
-                includes: 'Logotipos / Guías de Estilo / Dirección de Arte / Papelería',
+                includes: 'Logotipos / Guías de Estilo / Dirección de Arte / Estrategia de Marca',
                 time: 'DESDE EL CONCEPTO'
             },
             service2: {
@@ -205,10 +205,10 @@ export const translations = {
             title: 'WHAT I DO',
             subtitle: 'Specialized in creating visual narratives that break the mold',
             service1: {
-                title: 'BRANDING & ART DIRECTION',
+                title: 'CREATIVE DIRECTION & BRANDING',
                 subtitle: 'CREATING UNIVERSES',
                 desc: 'I don\'t make standalone logos, I build complete visual systems. Identity development from concept to implementation. Your brand\'s face with a solid visual narrative.',
-                includes: 'Logos / Style Guides / Art Direction / Stationery',
+                includes: 'Logos / Style Guides / Art Direction / Brand Strategy',
                 time: 'FROM CONCEPT'
             },
             service2: {
