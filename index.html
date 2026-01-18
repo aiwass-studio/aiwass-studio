@@ -72,6 +72,13 @@
       }
     }
   </script>
+  <!-- DNS Prefetch for faster connection establishment -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://feeds.behold.so">
+  <link rel="dns-prefetch" href="https://behold.pictures">
+
   <!-- Preconnect to external resources -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,10 +88,17 @@
   <!-- Preload LCP image for faster initial paint -->
   <link rel="preload" as="image" href="/assets/hero-emavisual.webp" fetchpriority="high">
 
-  <!-- Google Fonts with display=swap -->
+  <!-- Google Fonts - Deferred loading for better mobile performance -->
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
   <link
     href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet">
+  </noscript>
   <style>
     /* Hide default cursor to use custom one */
     body {
@@ -120,6 +134,7 @@
     .text-distress {
       background: url('https://www.transparenttextures.com/patterns/black-felt.png');
       -webkit-background-clip: text;
+      background-clip: text;
       color: rgba(18, 18, 18, 0.9);
     }
 
