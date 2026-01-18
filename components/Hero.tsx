@@ -31,8 +31,11 @@ const Hero: React.FC<HeroProps> = ({ language }) => {
         <div className="relative w-full h-full">
           {/* The Image treated with mix-blend-multiply to sit ON the paper */}
           <img
-            src="/assets/hero-emavisual.png"
+            src="/assets/hero-emavisual.webp"
             alt="Emanuel Parra"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover object-[75%_center] md:object-center mix-blend-multiply filter contrast-[1.2] brightness-90 grayscale"
             style={{
               opacity: 0.8,

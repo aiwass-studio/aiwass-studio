@@ -24,7 +24,7 @@ const projects: Project[] = [
     genre: 'BRANDING',
     director: 'EMA VISUAL',
     runtime: '2025',
-    image: '/assets/work/el-rincon-del-maiz.png',
+    image: '/assets/work/el-rincon-del-maiz.webp',
     year: '2025',
     link: 'https://www.behance.net/gallery/233095927/El-Rincon-del-Maiz-Branding-Logo-Design'
   },
@@ -34,7 +34,7 @@ const projects: Project[] = [
     genre: 'BRANDING • PACKAGING • WEB',
     director: 'EMA VISUAL',
     runtime: '2025',
-    image: '/assets/work/connexo.jpg',
+    image: '/assets/work/connexo.webp',
     year: '2025',
     link: 'https://www.behance.net/gallery/232163545/Connexo-Branding-Technology-NFC-Company'
   },
@@ -44,7 +44,7 @@ const projects: Project[] = [
     genre: 'STREETWEAR BRANDING',
     director: 'EMA VISUAL',
     runtime: '2025',
-    image: '/assets/work/kanamit-cult.jpg',
+    image: '/assets/work/kanamit-cult.webp',
     year: '2025',
     link: 'https://www.behance.net/gallery/231942751/Kanamit-Cult-Streetwear-Branding'
   },
@@ -54,7 +54,7 @@ const projects: Project[] = [
     genre: 'BRANDING',
     director: 'EMA VISUAL',
     runtime: '2024',
-    image: '/assets/work/natural.png',
+    image: '/assets/work/natural.webp',
     year: '2024',
     link: 'https://www.behance.net/gallery/215422833/NATURAL-JEWELRY-LOGO-DESIGN'
   },
@@ -64,7 +64,7 @@ const projects: Project[] = [
     genre: 'STREETWEAR DESIGN',
     director: 'EMA VISUAL',
     runtime: '2023',
-    image: '/assets/work/antimonio.png',
+    image: '/assets/work/antimonio.webp',
     year: '2023',
     link: 'https://www.behance.net/gallery/184376243/ANTIMONIO-STREETWEAR-DESIGN-T-SHIRT'
   },
@@ -74,7 +74,7 @@ const projects: Project[] = [
     genre: 'PODCAST BRANDING',
     director: 'EMA VISUAL',
     runtime: '2022',
-    image: '/assets/work/la-busqueda.png',
+    image: '/assets/work/la-busqueda.webp',
     year: '2022',
     link: 'https://www.behance.net/gallery/178679695/La-Busqueda-Podcast-Visual-identity'
   },
@@ -111,6 +111,8 @@ const Work: React.FC<WorkProps> = ({ language }) => {
                 <img
                   src={project.image}
                   alt={project.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-110 transition-all duration-700 ease-out"
                 />
               </div>

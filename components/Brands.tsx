@@ -7,24 +7,24 @@ interface BrandsProps {
 }
 
 const logos = [
-    'AAPLUS+.png',
-    'CACAO VIVO LOGO PRINCIPAL.png',
-    'CONNEXO ISO WORD O.png',
-    'DAEZ DIGITAL WEB.png',
+    'AAPLUS+.webp',
+    'CACAO VIVO LOGO PRINCIPAL.webp',
+    'CONNEXO ISO WORD O.webp',
+    'DAEZ DIGITAL WEB.webp',
     'ECHAME ESE CUENTO LOGOTIPO.svg',
     'EDUFETUS LOGO.svg',
-    'El Rincón del Maiz.png',
-    'EyB logo.png',
-    'Imagotipo.png',
-    'Logo orange.png',
+    'El Rincón del Maiz.webp',
+    'EyB logo.webp',
+    'Imagotipo.webp',
+    'Logo orange.webp',
     'LogoSVG.svg',
-    'Poción de Luna.png',
-    'SEA GREEN2.png',
-    'SN NEGRO.png',
-    'Textiles Continental.png',
+    'Poción de Luna.webp',
+    'SEA GREEN2.webp',
+    'SN NEGRO.webp',
+    'Textiles Continental.webp',
     'UGLY COOKIES.svg',
     'WORDMARK GREEN.svg',
-    'eko.png',
+    'eko.webp',
     'quantum-code.svg'
 ];
 
@@ -61,6 +61,8 @@ const Brands: React.FC<BrandsProps> = ({ language }) => {
                                 <img
                                     src={`/assets/brands/${logo}`}
                                     alt="Brand Logo"
+                                    loading="lazy"
+                                    decoding="async"
                                     className="max-w-full max-h-full object-contain"
                                 />
                             </div>
