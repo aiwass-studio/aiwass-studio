@@ -157,6 +157,13 @@ export const translations = {
         // Menu
         menu: {
             production: 'A Production by Emanuel Parra'
+        },
+
+        // Instagram Section
+        instagram: {
+            title: 'INSTAGRAM',
+            subtitle: 'TRANSMISIONES DESDE EL CAOS VISUAL',
+            followButton: 'SEGUIR EN INSTAGRAM'
         }
     },
 
@@ -317,6 +324,13 @@ export const translations = {
         // Menu
         menu: {
             production: 'A Production by Emanuel Parra'
+        },
+
+        // Instagram Section
+        instagram: {
+            title: 'INSTAGRAM',
+            subtitle: 'BROADCASTS FROM VISUAL CHAOS',
+            followButton: 'FOLLOW ON INSTAGRAM'
         }
     }
 };

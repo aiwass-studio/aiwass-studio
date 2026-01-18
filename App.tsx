@@ -9,6 +9,7 @@ import Skills from './components/Skills';
 import Work from './components/Work';
 import About from './components/About';
 import Contact from './components/Contact';
+import { InstagramFeed } from './components/InstagramFeed';
 import { translations, Language } from './translations';
 
 function App() {
@@ -206,6 +207,7 @@ function App() {
             <Skills language={language} />
             <Work language={language} />
             <About language={language} />
+            <InstagramFeed language={language} beholdFeedId="MIJVvODhUV7ctIyMaRPl" />
             <Contact language={language} />
           </main>
         </div>
