@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const logos = [
-    '/assets/loader/logo-ema1.png',
-    '/assets/loader/logo-ema2.png',
-    '/assets/loader/logo-ema3.png'
+    '/assets/loader/logo-ema1.webp',
+    '/assets/loader/logo-ema2.webp',
+    '/assets/loader/logo-ema3.webp'
 ];
 
 interface PreloaderProps {
@@ -13,6 +13,25 @@ interface PreloaderProps {
 
 const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
     const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
+
+    // Detect if mobile or slow connection - disable video for performance
+    const showVideo = useMemo(() => {
+        if (typeof window === 'undefined') return false;
+
+        // Check for mobile device
+        const isMobile = window.innerWidth < 768 ||
+            /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        // Check for slow connection
+        const connection = (navigator as any).connection;
+        const isSlowConnection = connection &&
+            (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
+
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        return !isMobile && !isSlowConnection && !prefersReducedMotion;
+    }, []);
 
     useEffect(() => {
         // Cycle through logos every 600ms
@@ -38,19 +57,22 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
         >
-            {/* Video Background */}
-            <div className="absolute inset-0 z-0">
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover opacity-50"
-                >
-                    <source src="/assets/videos/background-pattern.mp4" type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-black opacity-[0.63]"></div>
-            </div>
+            {/* Video Background - Only on desktop with good connection */}
+            {showVideo && (
+                <div className="absolute inset-0 z-0">
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="none"
+                        className="w-full h-full object-cover opacity-50"
+                    >
+                        <source src="/assets/videos/background-pattern.mp4" type="video/mp4" />
+                    </video>
+                    <div className="absolute inset-0 bg-black opacity-[0.63]"></div>
+                </div>
+            )}
 
             <div className="relative z-10 w-64 h-64 flex items-center justify-center">
                 <AnimatePresence mode="wait">
@@ -74,3 +96,4 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
 };
 
 export default Preloader;
+
