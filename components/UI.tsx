@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { translations, Language } from '../translations';
 
 export const NoiseOverlay: React.FC = () => {
-  // Inline SVG noise pattern - eliminates external network requests
-  const noisePattern = "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
+  // Disable noise overlay on mobile for better performance
+  const isMobile = useMemo(() => {
+    if (typeof window === 'undefined') return true;
+    return window.innerWidth < 768 ||
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }, []);
+
+  // Don't render on mobile - saves CPU
+  if (isMobile) return null;
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none w-full h-full overflow-hidden mix-blend-multiply opacity-30">
-      {/* Static Grain - inline SVG instead of external URL */}
+    <div className="fixed inset-0 z-50 pointer-events-none w-full h-full overflow-hidden mix-blend-multiply opacity-20">
+      {/* Simple CSS noise pattern - lightweight */}
       <div
         className="absolute inset-0"
-        style={{ backgroundImage: `url("${noisePattern}")`, backgroundSize: '150px 150px' }}
+        style={{
+          backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.03) 0%, transparent 50%)',
+          backgroundSize: '8px 8px'
+        }}
       />
     </div>
   );
