@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { translations, Language } from '../translations';
 
 export const NoiseOverlay: React.FC = () => {
+  // Inline SVG noise pattern - eliminates external network requests
+  const noisePattern = "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
+
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none w-full h-full overflow-hidden mix-blend-multiply opacity-40">
-      {/* Static Grain */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
-      {/* Moving Noise */}
-      <div className="w-[200%] h-[200%] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] animate-noise opacity-20"></div>
+    <div className="fixed inset-0 z-50 pointer-events-none w-full h-full overflow-hidden mix-blend-multiply opacity-30">
+      {/* Static Grain - inline SVG instead of external URL */}
+      <div
+        className="absolute inset-0"
+        style={{ backgroundImage: `url("${noisePattern}")`, backgroundSize: '150px 150px' }}
+      />
     </div>
   );
 };

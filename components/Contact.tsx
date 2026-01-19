@@ -42,8 +42,14 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
 
     return (
         <section id="contact" className="py-24 px-4 md:px-12 bg-[#450474] text-daez-paper relative overflow-hidden">
-            {/* Texture Overlay */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cardboard.png')] mix-blend-multiply opacity-50"></div>
+            {/* Texture Overlay - inline pattern instead of external URL */}
+            <div
+                className="absolute inset-0 mix-blend-multiply opacity-30"
+                style={{
+                    backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.15) 1px, transparent 1px)',
+                    backgroundSize: '4px 4px'
+                }}
+            />
 
             <motion.div
                 className="relative z-10 max-w-5xl mx-auto"

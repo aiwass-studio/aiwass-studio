@@ -28,7 +28,6 @@
           backgroundImage: {
             'halftone-sm': 'radial-gradient(circle, #121212 1px, transparent 1.5px)',
             'halftone-lg': 'radial-gradient(circle, #121212 2px, transparent 2.5px)',
-            'paper-texture': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
           },
           animation: {
             'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
@@ -130,12 +129,10 @@
       mix-blend-mode: screen;
     }
 
-    /* Typography Textures */
+    /* Typography Textures - simplified, no external URL */
     .text-distress {
-      background: url('https://www.transparenttextures.com/patterns/black-felt.png');
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: rgba(18, 18, 18, 0.9);
+      color: rgba(18, 18, 18, 0.85);
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
     }
 
     /* Custom Scrollbar */
