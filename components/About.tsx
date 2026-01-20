@@ -37,9 +37,9 @@ const About: React.FC<AboutProps> = ({ language }) => {
             <div className="absolute inset-[-4px] border-4 border-daez-ink bg-daez-ink rotate-2 z-0"></div>
             <div className="relative overflow-hidden bg-[#2CFF05]">
               <img
-                src="/assets/director.png"
+                src="/assets/director.jpg"
                 alt="Emanuel Parra"
-                className="relative z-10 w-full object-cover grayscale contrast-110 shadow-xl transition-all duration-300 group-hover:mix-blend-multiply"
+                className="relative z-10 w-full object-cover grayscale-[0.5] contrast-110 shadow-xl transition-all duration-300 group-hover:mix-blend-multiply"
               />
               <div className="absolute inset-0 z-20 bg-[#290245] mix-blend-lighten opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
