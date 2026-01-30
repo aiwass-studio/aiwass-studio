@@ -90,7 +90,8 @@ export const translations = {
             list1: [
                 { name: 'Branding', level: 95 },
                 { name: 'Diseño Web', level: 93 },
-                { name: 'Diseño Gráfico', level: 96 }
+                { name: 'Diseño Gráfico', level: 96 },
+                { name: 'Desarrollo App y Web', level: 85 }
             ],
             list2: [
                 { name: 'Adobe Illustrator', level: 96, id: 'ai' },
@@ -257,7 +258,8 @@ export const translations = {
             list1: [
                 { name: 'Branding', level: 95 },
                 { name: 'Web Design', level: 93 },
-                { name: 'Graphic Design', level: 96 }
+                { name: 'Graphic Design', level: 96 },
+                { name: 'App & Web Development', level: 85 }
             ],
             list2: [
                 { name: 'Adobe Illustrator', level: 96, id: 'ai' },
