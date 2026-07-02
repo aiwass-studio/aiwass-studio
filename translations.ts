@@ -162,13 +162,20 @@ export const translations = {
         field_type: "DISCIPLINA VISUAL REQUERIDA",
         field_budget: "ALINEACIÓN FINANCIERA",
         field_message: "EL CUELLO DE BOTELLA (¿QUÉ REGLAS VAMOS A ROMPER?)",
-        budget_tier1: "Nivel de Inversión Core [$290+ USD]",
-        budget_tier2: "Nivel de Arquitectura Digital [$660+ USD]",
-        budget_tier3: "Ecosistema del Monolito Total [$2,100+ USD]",
+        budget_tier1: "Nivel de Inversión Core [$550+ USD]",
+        budget_tier2: "Nivel de Arquitectura Digital [$1,350+ USD]",
+        budget_tier3: "Ecosistema del Monolito Total [$3,200+ USD]",
         contact_submit: "ENVIAR A PRODUCCIÓN",
         contact_success: "APROBADO PARA PRODUCCIÓN. NOS COMUNICAREMOS EN 24 HORAS.",
         links_title: "AIWASS STUDIO",
-        links_tagline: "Branding Alternativo • Desarrollo Web a Código • Streetwear. Selecciona un destino para ingresar al archivo de ejecución colectiva."
+        links_tagline: "Branding Alternativo • Desarrollo Web a Código • Streetwear. Selecciona un destino para ingresar al archivo de ejecución colectiva.",
+        price_tier1: "$550 USD",
+        price_tier2: "$1,350 USD",
+        price_tier3: "$3,200 USD",
+        separate_services_title: "SISTEMAS À LA CARTE",
+        payment_terms_title: "PROTOCOLOS DE PAGO",
+        payment_standard: "ESCROW ESTÁNDAR: 50% anticipo / 50% contra despliegue.",
+        payment_extended: "MARCOS EXTENDIDOS (>30 días hábiles): 40% anticipo / 30% hito intermedio / 30% contra despliegue final."
     },
     en: {
         nav: {
@@ -332,13 +339,20 @@ export const translations = {
         field_type: "VISUAL DISCIPLINE REQUIRED",
         field_budget: "FINANCIAL ALIGNMENT",
         field_message: "THE BOTTLENECK (WHAT RULES ARE WE BREAKING?)",
-        budget_tier1: "Core Investment Tier [$290+ USD]",
-        budget_tier2: "Digital Architecture Tier [$660+ USD]",
-        budget_tier3: "The Total Monolith Ecosystem [$2,100+ USD]",
+        budget_tier1: "Core Investment Tier [$550+ USD]",
+        budget_tier2: "Digital Architecture Tier [$1,350+ USD]",
+        budget_tier3: "The Total Monolith Ecosystem [$3,200+ USD]",
         contact_submit: "SUBMIT FOR PRODUCTION",
         contact_success: "APPROVED FOR PRODUCTION. WE WILL CONTACT YOU IN 24 HOURS.",
         links_title: "AIWASS STUDIO",
-        links_tagline: "Alternative Branding • Custom Web Dev • Streetwear. Select a destination to enter the collective execution archive."
+        links_tagline: "Alternative Branding • Custom Web Dev • Streetwear. Select a destination to enter the collective execution archive.",
+        price_tier1: "$550 USD",
+        price_tier2: "$1,350 USD",
+        price_tier3: "$3,200 USD",
+        separate_services_title: "À LA CARTE SYSTEMS",
+        payment_terms_title: "PAYMENT PROTOCOLS",
+        payment_standard: "STANDARD ESCROW: 50% upfront / 50% upon deployment.",
+        payment_extended: "EXTENDED FRAMEWORKS (>30 business days): 40% upfront / 30% milestone / 30% upon final deployment."
     },
     it: {
         nav: {
@@ -502,13 +516,20 @@ export const translations = {
         field_type: "DISCIPLINA VISIVA RICHIESTA",
         field_budget: "ALLINEAMENTO FINANZIARIO",
         field_message: "IL COLLO DI BOTTIGLIA (QUALI REGOLE DOBBIAMO ROMPERE?)",
-        budget_tier1: "Livello di Investimento Core [290+ €]",
-        budget_tier2: "Livello di Architettura Digitale [660+ €]",
-        budget_tier3: "Ecosistema del Monolito Totale [2,100+ €]",
+        budget_tier1: "Livello di Investimento Core [550+ €]",
+        budget_tier2: "Livello di Architettura Digitale [1,350+ €]",
+        budget_tier3: "Ecosistema del Monolito Totale [3,200+ €]",
         contact_submit: "INVIA PER LA PRODUZIONE",
         contact_success: "APPROVATO PER LA PRODUZIONE. VI CONTATTEREMO ENTRO 24 ORE.",
         links_title: "AIWASS STUDIO",
-        links_tagline: "Branding Alternativo • Sviluppo Web su Codice • Streetwear. Seleziona una destinazione per accedere all'archivio di esecuzione collettiva."
+        links_tagline: "Branding Alternativo • Sviluppo Web su Codice • Streetwear. Seleziona una destinazione per accedere all'archivio di esecuzione collettiva.",
+        price_tier1: "550 €",
+        price_tier2: "1,350 €",
+        price_tier3: "3,200 €",
+        separate_services_title: "SISTEMI À LA CARTE",
+        payment_terms_title: "PROTOCOLLI DI PAGAMENTO",
+        payment_standard: "ESCROW STANDARD: 50% anticipo / 50% al momento del collaudo.",
+        payment_extended: "STRUTTURE ESTESE (>30 giorni lavorativi): 40% anticipo / 30% traguardo intermedio / 30% al collaudo finale."
     }
 };
 

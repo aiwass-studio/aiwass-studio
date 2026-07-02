@@ -15,7 +15,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ language }) => {
       id: '01',
       titleKey: 'tier1_title' as const,
       descKey: 'tier1_desc' as const,
-      price: isIt ? '290 €' : '$290 USD',
+      price: t.price_tier1,
       deliverables: isEs 
         ? ['Logotipos Primarios y Secundarios', 'Manual de Identidad Visual', 'Asset Pack Gráfico e Iconografía', 'Dirección de Arte & Estrategia', 'Archivos Finales Vectoriales', 'Aplicaciones Físicas y Mockups']
         : isIt
@@ -26,7 +26,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ language }) => {
       id: '02',
       titleKey: 'tier2_title' as const,
       descKey: 'tier2_desc' as const,
-      price: isIt ? '660 €' : '$660 USD',
+      price: t.price_tier2,
       deliverables: isEs
         ? ['Diseño de Interfaz UI/UX a Medida', 'Desarrollo Frontend React / Vite', 'Estilos Modernos con Tailwind CSS', 'Animaciones de Scroll Avanzadas', 'Optimización de LCP y SEO Técnico', 'Integración de APIs y Formulación']
         : isIt
@@ -37,12 +37,60 @@ export const PricingPage: React.FC<PricingPageProps> = ({ language }) => {
       id: '03',
       titleKey: 'tier3_title' as const,
       descKey: 'tier3_desc' as const,
-      price: isIt ? '2,100 €' : '$2,100 USD',
+      price: t.price_tier3,
       deliverables: isEs
         ? ['Sistema de Identidad de Marca Completo', 'Desarrollo Web & Código a Medida', 'Cápsula de Indumentaria Streetwear', 'Fichas Técnicas para Taller (Tech Packs)', 'Sincronía Digital-Física Absoluta', 'Dirección de Arte y Asesoramiento 1-on-1']
         : isIt
         ? ['Sistema di Identità di Marca Completo', 'Sviluppo Web e Codice su Misura', 'Capsule di Abbigliamento Streetwear', 'Schede Tecniche di Produzione (Tech Packs)', 'Sincronia Digitale-Fisica Assoluta', 'Direzione Artistica e Consulenza 1-a-1']
         : ['Complete Brand Identity System', 'Custom Coded Web Application', 'Streetwear Apparel Capsule', 'Production-Ready Tech Packs', 'Absolute Digital-Physical Unity', '1-on-1 Art Direction & Consulting']
+    }
+  ];
+
+  const alacarteServices = [
+    {
+      name: 'Bespoke Visual Identity System',
+      desc: isEs 
+        ? 'Desarrollo integral de logotipo, tipografía, paleta de colores y guía de estilo de marca.' 
+        : isIt 
+        ? 'Sviluppo completo di logo, tipografia, tavolozza dei colori e linee guida del marchio.' 
+        : 'Complete development of visual logo systems, typography, color palette, and visual guidelines.',
+      price: isIt ? '650 €' : '$650 USD'
+    },
+    {
+      name: 'Custom Frontend Engineering (React/Vite)',
+      desc: isEs 
+        ? 'Desarrollo de interfaz de alta velocidad con animaciones interactivas y código limpio.' 
+        : isIt 
+        ? 'Sviluppo front-end ad alta velocità con animazioni interattive e codice pulito.' 
+        : 'High-speed frontend implementation with interactive components and clean code structure.',
+      price: isIt ? '1,100 €' : '$1,100 USD'
+    },
+    {
+      name: 'Streetwear Apparel Design & Tech Packs',
+      desc: isEs 
+        ? 'Diseño de prendas urbanas y preparación de fichas técnicas para producción en fábrica.' 
+        : isIt 
+        ? 'Design di abbigliamento streetwear e schede tecniche pronte per la produzione.' 
+        : 'Industrial streetwear apparel design and production-ready technical specification packages.',
+      price: isIt ? '750 €' : '$750 USD'
+    },
+    {
+      name: 'Advanced Motion & Interaction Design',
+      desc: isEs 
+        ? 'Integración de animaciones avanzadas mediante GSAP, ScrollTrigger y transiciones fluidas.' 
+        : isIt 
+        ? 'Integrazione di animazioni avanzate con GSAP, ScrollTrigger e transizioni fluide.' 
+        : 'Advanced motion graphics, scroll-driven interactive behaviors (GSAP), and premium transitions.',
+      price: isIt ? '400 €' : '$400 USD'
+    },
+    {
+      name: 'Technical SEO & Web Vitals Optimization',
+      desc: isEs 
+        ? 'Optimización de Core Web Vitals, tiempos de carga ultrarrápidos y auditoría SEO técnica.' 
+        : isIt 
+        ? 'Ottimizzazione di Core Web Vitals, velocità di caricamento fulminea e controlli SEO tecnici.' 
+        : 'Core Web Vitals fine-tuning, page loading performance audit, and technical SEO structure.',
+      price: isIt ? '350 €' : '$350 USD'
     }
   ];
 
@@ -118,6 +166,57 @@ export const PricingPage: React.FC<PricingPageProps> = ({ language }) => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* À La Carte Systems */}
+        <div className="mt-24 mb-10">
+          <div className="border-b-4 border-[#F2EFE9] pb-4 mb-8">
+            <h2 className="text-4xl md:text-6xl font-display uppercase tracking-tighter text-[#F2EFE9] filter-ink">
+              {t.separate_services_title}
+            </h2>
+          </div>
+          <div className="flex flex-col border-t-2 border-[#3F04BF]">
+            {alacarteServices.map((service, idx) => (
+              <div 
+                key={idx} 
+                className="grid grid-cols-1 md:grid-cols-12 border-b-2 border-[#3F04BF]/40 py-6 gap-4 transition-all duration-200 hover:border-[#F21B42]"
+              >
+                <div className="md:col-span-9 flex flex-col justify-center">
+                  <span className="font-mono text-sm text-[#F2EFE9] uppercase tracking-wider">{service.name}</span>
+                  <span className="font-serif text-xs text-[#F2EFE9]/60 mt-1">{service.desc}</span>
+                </div>
+                <div className="md:col-span-3 flex items-center md:justify-end text-left md:text-right">
+                  <span className="font-mono text-sm md:text-base font-bold text-[#F21B42] whitespace-nowrap">{service.price}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Payment Protocols */}
+        <div className="mt-24 mb-12">
+          <div className="border-b-4 border-[#F2EFE9] pb-4 mb-10">
+            <h2 className="text-4xl md:text-6xl font-display uppercase tracking-tighter text-[#F2EFE9] filter-ink">
+              {t.payment_terms_title}
+            </h2>
+          </div>
+          
+          <div className="border-4 border-[#3F04BF] bg-black p-6 md:p-8 shadow-[6px_6px_0px_#3F04BF] relative group transition-colors duration-300 hover:border-[#F21B42]">
+            <div className="absolute -top-3.5 left-4 bg-black border-2 border-[#F21B42] text-[#F21B42] font-mono text-[9px] px-2.5 py-0.5 uppercase tracking-widest font-bold">
+              [ FINANCIAL_PROTOCOLS // SOURCE ]
+            </div>
+            
+            <div className="space-y-6 pt-4 font-mono text-xs md:text-sm uppercase tracking-wider leading-relaxed">
+              <div className="flex flex-col md:flex-row md:items-start gap-2 border-b border-[#3F04BF]/30 pb-4">
+                <span className="text-[#F21B42] font-bold shrink-0">// STANDARD ESCROW:</span>
+                <span className="text-[#F2EFE9]/80">{t.payment_standard}</span>
+              </div>
+              <div className="flex flex-col md:flex-row md:items-start gap-2">
+                <span className="text-[#F21B42] font-bold shrink-0">// EXTENDED FRAMEWORKS:</span>
+                <span className="text-[#F2EFE9]/80">{t.payment_extended}</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Custom note block */}
