@@ -22,7 +22,7 @@ const projects: Project[] = [
     id: 1,
     title: 'EL RINCÓN DEL MAÍZ',
     genre: 'BRANDING',
-    director: 'EMA VISUAL',
+    director: 'AIWASS STUDIO',
     runtime: '2025',
     image: '/assets/work/el-rincon-del-maiz.webp',
     year: '2025',
@@ -32,7 +32,7 @@ const projects: Project[] = [
     id: 2,
     title: 'CONNEXO',
     genre: 'BRANDING • PACKAGING • WEB',
-    director: 'EMA VISUAL',
+    director: 'AIWASS STUDIO',
     runtime: '2025',
     image: '/assets/work/connexo.webp',
     year: '2025',
@@ -42,7 +42,7 @@ const projects: Project[] = [
     id: 3,
     title: 'KANAMIT CULT',
     genre: 'STREETWEAR BRANDING',
-    director: 'EMA VISUAL',
+    director: 'AIWASS STUDIO',
     runtime: '2025',
     image: '/assets/work/kanamit-cult.webp',
     year: '2025',
@@ -52,7 +52,7 @@ const projects: Project[] = [
     id: 4,
     title: 'NÁTURAL',
     genre: 'BRANDING',
-    director: 'EMA VISUAL',
+    director: 'AIWASS STUDIO',
     runtime: '2024',
     image: '/assets/work/natural.webp',
     year: '2024',
@@ -62,7 +62,7 @@ const projects: Project[] = [
     id: 5,
     title: 'ANTIMONIO',
     genre: 'STREETWEAR DESIGN',
-    director: 'EMA VISUAL',
+    director: 'AIWASS STUDIO',
     runtime: '2023',
     image: '/assets/work/antimonio.webp',
     year: '2023',
@@ -72,7 +72,7 @@ const projects: Project[] = [
     id: 6,
     title: 'LA BÚSQUEDA',
     genre: 'PODCAST BRANDING',
-    director: 'EMA VISUAL',
+    director: 'AIWASS STUDIO',
     runtime: '2022',
     image: '/assets/work/la-busqueda.webp',
     year: '2022',
@@ -84,7 +84,7 @@ const Work: React.FC<WorkProps> = ({ language }) => {
   const t = translations[language].work;
 
   return (
-    <section id="work" className="py-24 px-4 md:px-12 bg-daez-paper text-daez-ink relative">
+    <section id="work" className="py-24 px-4 md:px-12 bg-aiwass-bg text-aiwass-text relative">
       <SectionHeader title={t.title} subtitle={t.subtitle} />
 
       {/* Grid Layout - WHEATPASTE / STREET STYLE (Restored) */}
@@ -96,18 +96,18 @@ const Work: React.FC<WorkProps> = ({ language }) => {
           >
 
             {/* Tape Effect */}
-            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-[#e8e4dc] opacity-90 rotate-[-1deg] shadow-sm z-20 pointer-events-none"></div>
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-aiwass-text/15 border border-white/5 opacity-90 rotate-[-1deg] shadow-sm z-20 pointer-events-none"></div>
 
             {/* Card Container */}
             <a
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="block relative bg-daez-paper border-4 border-daez-ink p-2 shadow-[8px_8px_0px_0px_rgba(18,18,18,1)] group-hover:shadow-[12px_12px_0px_0px_#2CFF05] transition-all duration-300"
+              className="block relative bg-aiwass-bg border-4 border-aiwass-text p-2 shadow-[8px_8px_0px_#3F04BF] group-hover:shadow-[12px_12px_0px_#F21B42] group-hover:border-aiwass-red transition-all duration-300"
             >
 
               {/* Image */}
-              <div className="relative overflow-hidden aspect-[3/4] border-2 border-daez-ink">
+              <div className="relative overflow-hidden aspect-[3/4] border-2 border-aiwass-text">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -119,7 +119,7 @@ const Work: React.FC<WorkProps> = ({ language }) => {
 
               {/* Info Block */}
               <div className="mt-4 text-center relative">
-                <h3 className="font-display text-3xl leading-none uppercase tracking-tighter mb-1 relative z-10 group-hover:text-daez-blood transition-colors">
+                <h3 className="font-display text-3xl leading-none uppercase tracking-tighter mb-1 relative z-10 group-hover:text-aiwass-red transition-colors">
                   {project.title}
                 </h3>
                 <p className="font-mono text-xs uppercase tracking-widest opacity-70">
@@ -127,7 +127,7 @@ const Work: React.FC<WorkProps> = ({ language }) => {
                 </p>
 
                 {/* "Sticker" details */}
-                <div className="absolute -right-4 -bottom-6 bg-daez-ink text-daez-paper font-mono text-[10px] px-2 py-1 rotate-[-10deg] border border-daez-paper">
+                <div className="absolute -right-4 -bottom-6 bg-[#121212] text-aiwass-text font-mono text-[10px] px-2 py-1 rotate-[-10deg] border border-aiwass-text group-hover:border-aiwass-red group-hover:text-aiwass-red transition-colors">
                   {project.runtime}
                 </div>
               </div>

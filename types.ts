@@ -14,3 +14,9 @@ export interface Service {
   description: string;
   icon: string;
 }
+
+declare module 'react-i18next' {
+  export function useTranslation(): {
+    t: (key: string) => string;
+  };
+}

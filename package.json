@@ -12,8 +12,11 @@
     "@rive-app/react-canvas": "^4.25.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
+    "gsap": "^3.15.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-router-dom": "^6.30.4",
+    "resend": "^3.2.0",
     "tailwind-merge": "^3.4.0",
     "typewriter-effect": "^2.22.0"
   },

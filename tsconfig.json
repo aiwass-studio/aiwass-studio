@@ -21,6 +21,9 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "react-i18next": [
+        "./mock-i18n.ts"
       ]
     },
     "allowImportingTsExtensions": true,

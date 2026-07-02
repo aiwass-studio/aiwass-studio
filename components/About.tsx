@@ -11,7 +11,7 @@ const About: React.FC<AboutProps> = ({ language }) => {
   const t = translations[language].about;
 
   return (
-    <section id="about" className="py-24 px-4 md:px-12 bg-daez-paper relative overflow-hidden border-y-4 border-daez-ink">
+    <section id="about" className="py-24 px-4 md:px-12 bg-aiwass-bg relative overflow-hidden border-y-4 border-aiwass-text">
       {/* Duotone Filter Definition - Hidden */}
       <svg className="hidden">
         <filter id="duotone">
@@ -34,30 +34,30 @@ const About: React.FC<AboutProps> = ({ language }) => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="absolute inset-[-4px] border-4 border-daez-ink bg-daez-ink rotate-2 z-0"></div>
-            <div className="relative overflow-hidden bg-[#2CFF05]">
+            <div className="absolute inset-[-4px] border-4 border-aiwass-text bg-[#121212] rotate-2 z-0"></div>
+            <div className="relative overflow-hidden bg-aiwass-purple">
               <img
                 src="/assets/director.jpg"
                 alt="Emanuel Parra"
-                className="relative z-10 w-full object-cover grayscale-[0.5] contrast-110 shadow-xl transition-all duration-300 group-hover:mix-blend-multiply"
+                className="relative z-10 w-full object-cover grayscale-[0.5] contrast-110 shadow-xl transition-all duration-300 group-hover:mix-blend-screen"
               />
               <div className="absolute inset-0 z-20 bg-[#290245] mix-blend-lighten opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </div>
-            <div className="absolute top-2 left-2 bg-daez-paper px-4 py-2 font-display text-sm rotate-[-2deg] border-2 border-daez-ink shadow-md">
+            <div className="absolute top-2 left-2 bg-[#121212] px-4 py-2 font-display text-sm rotate-[-2deg] border-2 border-aiwass-text shadow-md text-aiwass-text">
               {t.title}
             </div>
           </motion.div>
         </div>
 
         {/* Right: The Manifesto (Script Style) */}
-        <div className="col-span-1 md:col-span-7 font-mono text-daez-ink relative">
-          <h2 className="text-8xl font-display text-daez-ink mb-12 absolute -top-16 -right-12 opacity-10 select-none">
+        <div className="col-span-1 md:col-span-7 font-mono text-aiwass-text relative">
+          <h2 className="text-8xl font-display text-aiwass-text mb-12 absolute -top-16 -right-12 opacity-5 select-none">
             DIRECTOR
           </h2>
 
-          <div className="border-l-4 border-daez-ink pl-8 py-2">
+          <div className="border-l-4 border-aiwass-text pl-8 py-2">
             <motion.h3
-              className="font-bold text-2xl uppercase mb-4 tracking-widest text-daez-blood"
+              className="font-display text-3xl uppercase mb-8 tracking-widest text-aiwass-purple"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -66,44 +66,50 @@ const About: React.FC<AboutProps> = ({ language }) => {
               {t.title}
             </motion.h3>
 
-            <div className="space-y-6 text-sm md:text-base leading-loose font-serif text-lg">
-              <motion.p
+            <div className="space-y-8 font-serif text-lg text-aiwass-text/90 leading-relaxed">
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
               >
-                {t.p1}
-              </motion.p>
-              <motion.p
+                <span className="font-mono text-aiwass-red text-xs tracking-widest uppercase mb-2 block">// ORIGINS.RAW</span>
+                <p className="font-light">{t.p1}</p>
+              </motion.div>
+
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
               >
-                {t.p2}
-              </motion.p>
-              <motion.p
-                className="font-display text-3xl md:text-4xl uppercase leading-none my-8 transform -rotate-1 text-daez-charcoal"
-                initial={{ opacity: 0, scale: 0.9 }}
+                <span className="font-mono text-aiwass-red text-xs tracking-widest uppercase mb-2 block">// ANTI_CORPORATE.MANIFESTO</span>
+                <p className="font-light">{t.p2}</p>
+              </motion.div>
+
+              <motion.h4
+                className="font-display text-4xl md:text-6xl uppercase leading-none my-12 text-aiwass-red tracking-tighter border-y-4 border-aiwass-red py-6 select-none"
+                initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.5, type: "spring" }}
+                transition={{ delay: 0.5, duration: 0.5 }}
               >
-                {t.quote}
-              </motion.p>
-              <motion.p
+                "{t.quote}"
+              </motion.h4>
+
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
               >
-                {t.p3}
-              </motion.p>
+                <span className="font-mono text-aiwass-red text-xs tracking-widest uppercase mb-2 block">// TECH_DEVELOPMENT.AUTOMATION</span>
+                <p className="font-light">{t.p3}</p>
+              </motion.div>
             </div>
 
             <motion.div
-              className="mt-16 border-t-2 border-dashed border-daez-ink pt-8 grid grid-cols-3 gap-8"
+              className="mt-16 border-t-2 border-dashed border-aiwass-text pt-8 grid grid-cols-3 gap-8"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { translations, Language } from '../translations';
 
 export const NoiseOverlay: React.FC = () => {
@@ -13,12 +14,12 @@ export const NoiseOverlay: React.FC = () => {
   if (isMobile) return null;
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none w-full h-full overflow-hidden mix-blend-multiply opacity-20">
+    <div className="fixed inset-0 z-50 pointer-events-none w-full h-full overflow-hidden mix-blend-screen opacity-30">
       {/* Simple CSS noise pattern - lightweight */}
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.03) 0%, transparent 50%)',
+          backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(242, 239, 233, 0.04) 0%, transparent 50%)',
           backgroundSize: '8px 8px'
         }}
       />
@@ -37,7 +38,14 @@ export const CustomCursor: React.FC = () => {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+      if (
+        target.tagName === 'A' || 
+        target.tagName === 'BUTTON' || 
+        target.closest('a') || 
+        target.closest('button') ||
+        target.classList.contains('cursor-pointer') ||
+        target.closest('.cursor-pointer')
+      ) {
         setIsHovering(true);
       } else {
         setIsHovering(false);
@@ -52,16 +60,25 @@ export const CustomCursor: React.FC = () => {
     };
   }, []);
 
+  const maskStyle = {
+    mask: 'url(/assets/aiwass-cursor.svg) no-repeat center / contain',
+    WebkitMask: 'url(/assets/aiwass-cursor.svg) no-repeat center / contain',
+  };
+
   return (
     <div
-      className="fixed top-0 left-0 z-[9999] pointer-events-none transition-transform duration-75 ease-out"
+      className="fixed top-0 left-0 z-[9999] pointer-events-none transition-transform duration-75 ease-out select-none mix-blend-difference"
       style={{
         transform: `translate(${position.x}px, ${position.y}px) translate(-50%, -50%)`,
       }}
     >
       <div
-        className={`rounded-full transition-all duration-300 ease-out border-2 border-daez-blood ${isHovering ? 'w-12 h-12 bg-daez-blood/40 scale-125' : 'w-4 h-4 bg-daez-blood'
-          }`}
+        className={`transition-all duration-300 ease-out origin-center ${
+          isHovering 
+            ? 'w-12 h-12 bg-aiwass-purple rotate-45 scale-125 filter drop-shadow-[0_0_8px_#3F04BF]' 
+            : 'w-6 h-6 bg-aiwass-red rotate-0'
+        }`}
+        style={maskStyle}
       />
     </div>
   );
@@ -75,7 +92,7 @@ export const StickyCTA: React.FC<StickyCTAProps> = ({ language }) => {
   const t = translations[language].cta;
 
   return (
-    <a href="#contact" className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 group cursor-none mix-blend-difference text-white">
+    <Link to="/contact" className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 group cursor-none mix-blend-difference text-white">
       <div className="relative flex items-center justify-center w-20 h-20 md:w-32 md:h-32">
         {/* Stamp Effect Background */}
         <div className="absolute inset-0 bg-white rounded-full opacity-0 group-hover:opacity-10 transition-opacity"></div>
@@ -94,16 +111,16 @@ export const StickyCTA: React.FC<StickyCTAProps> = ({ language }) => {
           {t.center}
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 
-export const SectionHeader: React.FC<{ title: string; subtitle: string; inverse?: boolean }> = ({ title, subtitle, inverse }) => (
-  <div className={`border-b-4 pb-2 mb-16 flex flex-col md:flex-row justify-between items-end ${inverse ? 'border-daez-paper' : 'border-daez-ink'}`}>
-    <h2 className={`text-6xl md:text-9xl font-display uppercase tracking-tighter leading-[0.8] filter-ink ${inverse ? 'text-daez-paper' : 'text-daez-ink'}`}>
+export const SectionHeader: React.FC<{ title: string; subtitle: string; inverse?: boolean }> = ({ title, subtitle }) => (
+  <div className="border-b-4 pb-2 mb-16 flex flex-col md:flex-row justify-between items-end border-aiwass-text">
+    <h2 className="text-6xl md:text-9xl font-display uppercase tracking-tighter leading-[0.8] filter-ink text-aiwass-text">
       {title}
     </h2>
-    <span className="font-mono text-daez-blood text-sm md:text-base mb-2 font-bold uppercase tracking-widest">
+    <span className="font-mono text-aiwass-red text-sm md:text-base mb-2 font-bold uppercase tracking-widest">
       No. {Math.floor(Math.random() * 9999)} // {subtitle}
     </span>
   </div>

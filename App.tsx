@@ -1,134 +1,139 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { CustomCursor, NoiseOverlay, StickyCTA } from './components/UI';
 import Preloader from './components/Preloader';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Brands from './components/Brands';
-import Skills from './components/Skills';
-import Work from './components/Work';
-import About from './components/About';
-import Contact from './components/Contact';
-import { InstagramFeed } from './components/InstagramFeed';
+import Home from './pages/Home';
+import WorkPage from './pages/WorkPage';
+import PricingPage from './pages/PricingPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import Footer from './components/Footer';
 import { translations, Language } from './translations';
+import { AiwassLogo } from './components/AiwassLogo';
+
+// Scroll to top on route transitions
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 function App() {
-  const [loading, setLoading] = React.useState(true);
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const [language, setLanguage] = React.useState<Language>('es');
+  const [loading, setLoading] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [language, setLanguage] = useState<Language>('en');
+  (window as any).__language = language; // Sync assign during render to avoid lagging child hook states
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'es' ? 'en' : 'es');
-  };
-
+  const location = useLocation();
+  const currentLanguage = language;
+  const isEs = language === 'es';
   const t = translations[language];
 
-  const [isHeroVisible, setIsHeroVisible] = React.useState(true);
+  useEffect(() => {
+    (window as any).__language = language;
+    window.dispatchEvent(new Event('languagechange'));
+  }, [language]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loading) return;
 
-    const navElement = document.querySelector('nav');
-    const handleScroll = () => {
-      const heroSection = document.getElementById('hero');
-      if (heroSection) {
-        const rect = heroSection.getBoundingClientRect();
-        // Check if hero is substantially visible (e.g. bottom is still in upper part of screen)
-        // Or simpler: if scrollY is less than hero height for instance.
-        // Actually user said "while view is in hero". IntersectionObserver is better.
-      }
-    };
+    // Observe #hero element if we are on the Home page
+    const hero = document.getElementById('hero');
+    if (!hero) {
+      setIsHeroVisible(false);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsHeroVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 } // 10% visible constitutes "in hero"
+      { threshold: 0.1 }
     );
 
-    const hero = document.getElementById('hero');
-    if (hero) observer.observe(hero);
-
+    observer.observe(hero);
     return () => observer.disconnect();
-  }, [loading]);
+  }, [loading, location.pathname]);
+
+  const showScrolledLogo = location.pathname !== '/' || !isHeroVisible;
+
+  const marqueeText = language === 'es'
+    ? "AIWASS STUDIO • ESTÉTICA DISRUPTIVA • BRANDING • WEB DEV • APP DEVELOPMENT • SÓLO PARA MARCAS CON ACTITUD •"
+    : language === 'it'
+    ? "AIWASS STUDIO • ESTETICA DIROMPENTE • BRANDING • WEB DEV • APP DEVELOPMENT • SOLO PER MARCHI CON ATTITUDINE •"
+    : "AIWASS STUDIO • DISRUPTIVE AESTHETICS • BRANDING • WEB DEV • APP DEVELOPMENT • ONLY FOR BRANDS WITH ATTITUDE •";
 
   return (
     <>
+      <ScrollToTop />
       <AnimatePresence mode="wait">
         {loading && <Preloader key="preloader" onLoadComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
       {!loading && (
-        <div className="relative min-h-screen bg-daez-paper text-daez-ink overflow-x-hidden selection:bg-daez-blood selection:text-white">
+        <div className="relative min-h-screen bg-aiwass-bg text-aiwass-text overflow-x-hidden selection:bg-aiwass-red selection:text-white flex flex-col justify-between">
+          
           {/* Atmosphere & Utilities */}
           <CustomCursor />
           <NoiseOverlay />
           <StickyCTA language={language} />
 
           {/* Top Marquee */}
-          <div className="fixed top-0 left-0 w-full z-50 bg-daez-ink text-daez-paper py-2 overflow-hidden border-b-2 border-daez-blood">
+          <div className="fixed top-0 left-0 w-full z-50 bg-black text-aiwass-text py-2 overflow-hidden border-b-2 border-aiwass-purple">
             <div className="flex whitespace-nowrap animate-marquee">
               <span className="font-mono text-xs font-bold tracking-widest px-4">
-                UNA PRODUCCIÓN DE EMA VISUAL • EN TECHNICOLOR • DISEÑO VISCERAL • CÓDIGO LIMPIO • RATED R •
-                UNA PRODUCCIÓN DE EMA VISUAL • EN TECHNICOLOR • DISEÑO VISCERAL • CÓDIGO LIMPIO • RATED R •
-                UNA PRODUCCIÓN DE EMA VISUAL • EN TECHNICOLOR • DISEÑO VISCERAL • CÓDIGO LIMPIO • RATED R •
+                {marqueeText} {marqueeText} {marqueeText}
               </span>
             </div>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation Header */}
           <nav className="fixed top-[34px] lg:top-12 left-0 w-full z-40 px-6 py-6 flex justify-between items-center pointer-events-none">
-            {/* Backdrop blur only on mobile, positioned flush with black strip */}
-            <div className="absolute inset-0 bg-daez-paper/80 backdrop-blur-sm -z-10 lg:hidden"></div>
+            {/* Backdrop blur only on mobile */}
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm -z-10 lg:hidden"></div>
 
-            {/* Logo Container */}
-            <div className="pointer-events-auto cursor-none z-50 relative h-10 flex items-center">
-              {/* Mobile Layer: Simple Static Logo */}
-              <img src="/assets/Ema-logo.svg" alt="EMA" className="h-10 w-auto lg:hidden" />
-
-              {/* Desktop Layer: Scroll Switcher */}
-              <div className="hidden lg:block relative h-10 w-auto">
-                {/* Primary Logo (Hero) */}
-                <img
-                  src="/assets/Ema-logo.svg"
-                  alt="EMA"
-                  className={`h-10 w-auto transition-opacity duration-300 ${isHeroVisible ? 'opacity-100' : 'opacity-0'}`}
-                />
-                {/* Secondary Logo (Scrolled) */}
-                <img
-                  src="/assets/logo-ema3-hover.png"
-                  alt="EMA"
-                  className={`h-10 w-auto transition-opacity duration-300 absolute top-0 left-0 ${!isHeroVisible ? 'opacity-100' : 'opacity-0'}`}
-                />
-              </div>
-            </div>
+            {/* Logo Container wrapping AiwassLogo in Router Link */}
+            <Link to="/" className="pointer-events-auto cursor-none z-50 relative h-10 flex items-center">
+              <AiwassLogo 
+                className={`h-10 w-auto transition-colors duration-300 ${showScrolledLogo ? 'text-aiwass-purple' : 'text-aiwass-text'} hover:text-aiwass-red`} 
+              />
+            </Link>
 
             <div className="flex items-center gap-4 pointer-events-auto">
-              {/* Language Switcher */}
-              <div className="flex items-center gap-2">
-                <span className={`font-mono text-xs uppercase ${language === 'es' ? 'text-daez-blood font-bold' : 'text-daez-ink/50'}`}>
-                  ES
-                </span>
-                <button
-                  onClick={toggleLanguage}
-                  className="relative w-12 h-6 bg-daez-ink/20 rounded-full cursor-none transition-colors hover:bg-daez-ink/30"
-                >
-                  <div className={`absolute top-1 w-4 h-4 bg-daez-blood rounded-full transition-all duration-300 ${language === 'es' ? 'left-1' : 'left-7'}`}></div>
-                </button>
-                <span className={`font-mono text-xs uppercase ${language === 'en' ? 'text-daez-blood font-bold' : 'text-daez-ink/50'}`}>
-                  EN
-                </span>
+              {/* Language Switcher (Brutalist Button Bar) */}
+              <div className="flex items-center gap-3 border-2 border-[#3F04BF] p-1.5 bg-[#0A0A0A]">
+                {[
+                  { code: 'en', src: 'https://flagcdn.com/us.svg', alt: 'USA' },
+                  { code: 'es', src: 'https://flagcdn.com/ve.svg', alt: 'Venezuela' },
+                  { code: 'it', src: 'https://flagcdn.com/it.svg', alt: 'Italia' }
+                ].map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => setLanguage(lang.code)}
+                    className={`w-7 h-5 transition-all duration-150 border ${
+                      currentLanguage === lang.code
+                        ? 'border-[#F21B42] scale-110 shadow-[0_0_8px_#F21B42]'
+                        : 'border-transparent opacity-50 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={lang.src} alt={lang.alt} className="w-full h-full object-cover" />
+                  </button>
+                ))}
               </div>
 
               {/* Hamburger Button */}
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="cursor-none flex flex-col gap-1.5 p-2 group"
+                className="cursor-none flex flex-col gap-1.5 p-2 group z-50 relative"
                 aria-label="Menu"
               >
-                <span className={`block w-8 h-0.5 bg-daez-ink transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                <span className={`block w-8 h-0.5 bg-daez-ink transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}></span>
-                <span className={`block w-8 h-0.5 bg-daez-ink transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                <span className={`block w-8 h-0.5 bg-aiwass-text transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                <span className={`block w-8 h-0.5 bg-aiwass-text transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}></span>
+                <span className={`block w-8 h-0.5 bg-aiwass-text transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
               </button>
             </div>
           </nav>
@@ -137,79 +142,71 @@ function App() {
           <div className={`fixed inset-0 z-50 transition-all duration-500 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
             {/* Background overlay */}
             <div
-              className="absolute inset-0 bg-daez-ink/95 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/95 backdrop-blur-sm"
               onClick={() => setMenuOpen(false)}
             ></div>
 
             {/* Menu Content */}
             <div className={`relative h-full flex flex-col items-center justify-center transition-transform duration-500 ${menuOpen ? 'translate-y-0' : '-translate-y-full'}`}>
-              {/* Close button */}
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="absolute top-24 right-8 cursor-none text-daez-paper hover:text-daez-blood transition-colors"
-              >
-                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-
               {/* Menu Links */}
               <nav className="flex flex-col gap-6 text-center">
-                <a
-                  href="#hero"
+                <Link
+                  to="/"
                   onClick={() => setMenuOpen(false)}
-                  className="font-display text-4xl md:text-6xl uppercase text-daez-paper hover:text-daez-blood transition-colors cursor-none tracking-tighter"
+                  className="font-display text-4xl md:text-6xl uppercase text-aiwass-text hover:text-aiwass-purple transition-colors cursor-none tracking-tighter"
                 >
                   {t.nav.home}
-                </a>
-                <a
-                  href="#about"
+                </Link>
+                <Link
+                  to="/about"
                   onClick={() => setMenuOpen(false)}
-                  className="font-display text-4xl md:text-6xl uppercase text-daez-paper hover:text-daez-blood transition-colors cursor-none tracking-tighter"
+                  className="font-display text-4xl md:text-6xl uppercase text-aiwass-text hover:text-aiwass-purple transition-colors cursor-none tracking-tighter"
                 >
                   {t.nav.about}
-                </a>
-                <a
-                  href="#services"
+                </Link>
+                <Link
+                  to="/pricing"
                   onClick={() => setMenuOpen(false)}
-                  className="font-display text-4xl md:text-6xl uppercase text-daez-paper hover:text-daez-blood transition-colors cursor-none tracking-tighter"
+                  className="font-display text-4xl md:text-6xl uppercase text-aiwass-text hover:text-aiwass-purple transition-colors cursor-none tracking-tighter"
                 >
-                  {t.nav.services}
-                </a>
-                <a
-                  href="#work"
+                  {t.nav.pricing}
+                </Link>
+                <Link
+                  to="/work"
                   onClick={() => setMenuOpen(false)}
-                  className="font-display text-4xl md:text-6xl uppercase text-daez-paper hover:text-daez-blood transition-colors cursor-none tracking-tighter"
+                  className="font-display text-4xl md:text-6xl uppercase text-aiwass-text hover:text-aiwass-purple transition-colors cursor-none tracking-tighter"
                 >
-                  {t.nav.projects}
-                </a>
-                <a
-                  href="#contact"
+                  {t.nav.work}
+                </Link>
+                <Link
+                  to="/contact"
                   onClick={() => setMenuOpen(false)}
-                  className="font-display text-4xl md:text-6xl uppercase text-daez-paper hover:text-daez-blood transition-colors cursor-none tracking-tighter"
+                  className="font-display text-4xl md:text-6xl uppercase text-aiwass-text hover:text-aiwass-purple transition-colors cursor-none tracking-tighter"
                 >
                   {t.nav.contact}
-                </a>
+                </Link>
               </nav>
 
               {/* Decorative elements */}
-              <div className="absolute bottom-8 font-mono text-xs text-daez-paper/50 uppercase tracking-widest">
+              <div className="absolute bottom-8 font-mono text-xs text-aiwass-text/50 uppercase tracking-widest">
                 {t.menu.production}
               </div>
             </div>
           </div>
 
-          {/* Main Content Flow */}
-          <main className="relative z-10">
-            <Hero language={language} />
-            <Services language={language} />
-            <Brands language={language} />
-            <Skills language={language} />
-            <Work language={language} />
-            <About language={language} />
-            <InstagramFeed language={language} beholdFeedId="MIJVvODhUV7ctIyMaRPl" />
-            <Contact language={language} />
+          {/* Main Content Routing Flow */}
+          <main className="relative z-10 flex-grow">
+            <Routes>
+              <Route path="/" element={<Home language={language} />} />
+              <Route path="/work" element={<WorkPage language={language} />} />
+              <Route path="/pricing" element={<PricingPage language={language} />} />
+              <Route path="/about" element={<AboutPage language={language} />} />
+              <Route path="/contact" element={<ContactPage language={language} />} />
+            </Routes>
           </main>
+
+          {/* Persistent Global Footer */}
+          <Footer language={language} />
         </div>
       )}
     </>

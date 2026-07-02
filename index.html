@@ -3,31 +3,54 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="icon" type="image/svg+xml" href="/assets/aiwass-isotipo.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EMA VISUAL STUDIOS | Directing Digital Chaos</title>
+  <meta name="description" content="No diseño para complacer a todos. Dirijo sistemas visuales y plataformas web para marcas disruptivas, estudios de tatuajes, streetwear y la escena musical. Identidad cruda, código impecable." />
+  <title>AIWASS STUDIO | Estética Disruptiva, Branding & Desarrollo Web</title>
+  <script>
+    // Suppress cdn.tailwindcss.com production warnings
+    (function() {
+      const originalWarn = console.warn;
+      console.warn = function(...args) {
+        if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com should not be used in production')) {
+          return;
+        }
+        originalWarn.apply(console, args);
+      };
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
+            aiwass: {
+              bg: '#0A0A0A',      // Pure black / ultra dark bg
+              text: '#F2EFE9',    // Bone white
+              purple: '#3F04BF',  // Primary Accent (Electric Violet)
+              red: '#F21B42',     // Secondary Accent (Radical Red)
+              rust: '#8B3A18',
+              charcoal: '#A0A0A0' // Soft gray for text descriptions on dark bg
+            },
             daez: {
-              paper: '#F2EFE9', // Bone white/Old paper
-              ink: '#121212',   // Soft black
-              blood: '#2CFF05', // Neon Green (replaces Red)
-              rust: '#8B3A18',  // Secondary rusty orange
-              charcoal: '#2A2A2A'
+              paper: '#0A0A0A',   // Map old paper to new dark bg
+              ink: '#F2EFE9',     // Map old ink to bone white
+              blood: '#F21B42',   // Map old blood to radical red
+              purple: '#3F04BF',
+              red: '#F21B42',
+              rust: '#8B3A18',
+              charcoal: '#A0A0A0'
             }
           },
           fontFamily: {
-            display: ['"Anton"', 'sans-serif'],
+            display: ['"Lacquer"', '"Anton"', 'sans-serif'],
             mono: ['"Space Mono"', 'monospace'],
             serif: ['"Space Grotesk"', 'sans-serif'], // Replaced Times New Roman
           },
           backgroundImage: {
-            'halftone-sm': 'radial-gradient(circle, #121212 1px, transparent 1.5px)',
-            'halftone-lg': 'radial-gradient(circle, #121212 2px, transparent 2.5px)',
+            'halftone-sm': 'radial-gradient(circle, #F2EFE9 1px, transparent 1.5px)',
+            'halftone-lg': 'radial-gradient(circle, #F2EFE9 2px, transparent 2.5px)',
           },
           animation: {
             'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
@@ -84,26 +107,46 @@
   <link rel="preconnect" href="https://cdn.tailwindcss.com">
   <link rel="preconnect" href="https://feeds.behold.so">
 
-  <!-- Preload LCP image for faster initial paint -->
-  <link rel="preload" as="image" href="/assets/hero-emavisual.webp" fetchpriority="high">
-
   <!-- Google Fonts - Deferred loading for better mobile performance -->
   <link rel="preload" as="style"
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Lacquer&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
   <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Lacquer&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet" media="print" onload="this.media='all'">
   <noscript>
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Lacquer&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet">
   </noscript>
   <style>
+    /* Hide Behold branding credit */
+    .branding,
+    a.branding,
+    a[href*="behold.so"],
+    a[aria-label="behold"],
+    behold-widget a {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+      height: 0px !important;
+      width: 0px !important;
+      padding: 0px !important;
+      margin: 0px !important;
+    }
+
+    /* Clip Behold.so bottom branding if inside iframe/shadow root */
+    behold-widget {
+      display: block !important;
+      clip-path: inset(0 0 35px 0) !important;
+      margin-bottom: -35px !important;
+    }
+
     /* Hide default cursor to use custom one */
     body {
       cursor: none;
-      background-color: #F2EFE9;
-      color: #121212;
+      background-color: #0A0A0A;
+      color: #F2EFE9;
       overflow-x: hidden;
     }
 
@@ -131,8 +174,8 @@
 
     /* Typography Textures - simplified, no external URL */
     .text-distress {
-      color: rgba(18, 18, 18, 0.85);
-      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+      color: rgba(242, 239, 233, 0.85);
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
     }
 
     /* Custom Scrollbar */
@@ -141,13 +184,13 @@
     }
 
     ::-webkit-scrollbar-track {
-      background: #F2EFE9;
-      border-left: 1px solid #121212;
+      background: #0A0A0A;
+      border-left: 1px solid #F2EFE9;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #2CFF05;
-      border: 2px solid #F2EFE9;
+      background: #3F04BF;
+      border: 2px solid #0A0A0A;
     }
   </style>
   <script type="importmap">
@@ -161,7 +204,6 @@
       }
     }
     </script>
-  <link rel="stylesheet" href="/index.css">
 </head>
 
 <body>
@@ -169,8 +211,10 @@
   <svg style="display: none;">
     <defs>
       <filter id="ink-bleed">
-        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+        <feGaussianBlur stdDeviation="1" result="blur" />
+        <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.35" numOctaves="3" result="noise" />
+        <feDisplacementMap in="goo" in2="noise" scale="4.2" />
       </filter>
       <filter id="paper-roughness">
         <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />

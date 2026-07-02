@@ -1,123 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Language, translations } from '../translations';
 
-interface InstagramPost {
-    id: string;
-    mediaUrl: string;
-    permalink: string;
-    caption?: string;
-    mediaType: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM';
-    timestamp: string;
-}
-
 interface InstagramFeedProps {
     language: Language;
-    beholdFeedId?: string; // Your Behold.so Feed ID
-    maxPosts?: number;
+    beholdFeedId?: string; // Optional custom feed ID
 }
-
-// Demo posts for preview mode (before connecting Behold)
-const DEMO_POSTS: InstagramPost[] = [
-    {
-        id: '1',
-        mediaUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop',
-        permalink: 'https://instagram.com',
-        caption: 'VISUAL CHAOS',
-        mediaType: 'IMAGE',
-        timestamp: '2026-01-15T12:00:00Z'
-    },
-    {
-        id: '2',
-        mediaUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=400&fit=crop',
-        permalink: 'https://instagram.com',
-        caption: 'RATED R',
-        mediaType: 'IMAGE',
-        timestamp: '2026-01-14T12:00:00Z'
-    },
-    {
-        id: '3',
-        mediaUrl: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&h=400&fit=crop',
-        permalink: 'https://instagram.com',
-        caption: 'STREETWEAR',
-        mediaType: 'IMAGE',
-        timestamp: '2026-01-13T12:00:00Z'
-    },
-    {
-        id: '4',
-        mediaUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop',
-        permalink: 'https://instagram.com',
-        caption: 'BRANDING',
-        mediaType: 'IMAGE',
-        timestamp: '2026-01-12T12:00:00Z'
-    },
-    {
-        id: '5',
-        mediaUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop',
-        permalink: 'https://instagram.com',
-        caption: 'DIRECTING',
-        mediaType: 'IMAGE',
-        timestamp: '2026-01-11T12:00:00Z'
-    },
-    {
-        id: '6',
-        mediaUrl: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=400&fit=crop',
-        permalink: 'https://instagram.com',
-        caption: 'AUDIO',
-        mediaType: 'IMAGE',
-        timestamp: '2026-01-10T12:00:00Z'
-    },
-];
 
 export const InstagramFeed: React.FC<InstagramFeedProps> = ({
     language,
-    beholdFeedId,
-    maxPosts = 6
+    beholdFeedId = "K4eRhAkoVQhUKDsc4Tr2"
 }) => {
-    const [posts, setPosts] = useState<InstagramPost[]>(DEMO_POSTS);
-    const [loading, setLoading] = useState(false);
-    const [isDemo, setIsDemo] = useState(true);
     const t = translations[language];
 
-    // Fetch from Behold.so API when Feed ID is provided
+    // Dynamically inject the Behold widget script on mount
     useEffect(() => {
-        if (!beholdFeedId) {
-            setIsDemo(true);
-            setPosts(DEMO_POSTS.slice(0, maxPosts));
-            return;
+        const scriptSrc = "https://w.behold.so/widget.js";
+        const existingScript = document.querySelector(`script[src="${scriptSrc}"]`);
+        
+        if (!existingScript) {
+            const script = document.createElement("script");
+            script.type = "module";
+            script.src = scriptSrc;
+            document.head.appendChild(script);
         }
 
-        const fetchInstagramFeed = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(`https://feeds.behold.so/${beholdFeedId}`);
-                const data = await response.json();
-
-                if (data && data.posts && Array.isArray(data.posts)) {
-                    const formattedPosts: InstagramPost[] = data.posts.slice(0, maxPosts).map((post: any) => ({
-                        id: post.id,
-                        mediaUrl: post.sizes?.medium?.mediaUrl || post.thumbnailUrl || post.mediaUrl,
-                        permalink: post.permalink,
-                        caption: post.prunedCaption || post.caption,
-                        mediaType: post.mediaType,
-                        timestamp: post.timestamp
-                    }));
-                    setPosts(formattedPosts);
-                    setIsDemo(false);
+        // Poll to hide the branding credit link inside both Light DOM and open Shadow DOM
+        const purgeBranding = () => {
+            // 1. Light DOM Purge
+            const lightBranding = document.querySelectorAll('a.branding, a[href*="behold.so"], a[aria-label="behold"]');
+            lightBranding.forEach(el => el.remove());
+            
+            // 2. Shadow DOM Purge (for behold-widget encapsulated markup)
+            const widgets = document.querySelectorAll('behold-widget');
+            widgets.forEach(widget => {
+                if (widget.shadowRoot) {
+                    const shadowBranding = widget.shadowRoot.querySelectorAll('a.branding, a[href*="behold.so"], a[aria-label="behold"]');
+                    shadowBranding.forEach(el => el.remove());
                 }
-            } catch (error) {
-                console.error('Error fetching Instagram feed:', error);
-                setPosts(DEMO_POSTS.slice(0, maxPosts));
-                setIsDemo(true);
-            }
-            setLoading(false);
+            });
         };
 
-        fetchInstagramFeed();
-    }, [beholdFeedId, maxPosts]);
+        // Run immediately
+        purgeBranding();
+
+        // Observe document changes to delete it on insertion
+        const observer = new MutationObserver(() => {
+            purgeBranding();
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        // Fallback interval to ensure it stays removed
+        const interval = setInterval(purgeBranding, 200);
+
+        return () => {
+            observer.disconnect();
+            clearInterval(interval);
+        };
+    }, []);
 
     return (
-        <section id="instagram" className="relative py-24 bg-daez-ink overflow-hidden">
+        <section id="instagram" className="relative py-24 bg-[#121212] overflow-hidden border-t-2 border-[#3F04BF]/30">
             {/* Film Grain Overlay */}
             <div
                 className="absolute inset-0 pointer-events-none opacity-20 mix-blend-overlay"
@@ -140,51 +87,25 @@ export const InstagramFeed: React.FC<InstagramFeedProps> = ({
                 >
                     {/* Distressed Label */}
                     <div className="inline-block mb-4">
-                        <span className="font-mono text-xs tracking-[0.3em] text-daez-blood uppercase px-3 py-1 border border-daez-blood">
-                            @EMAVISUAL
+                        <span className="font-mono text-xs tracking-[0.3em] text-aiwass-red uppercase px-3 py-1 border border-aiwass-red">
+                            @AIWASS.STUDIO
                         </span>
                     </div>
 
-                    <h2 className="font-display text-5xl md:text-7xl text-daez-paper uppercase tracking-tight mb-4">
+                    <h2 className="font-display text-5xl md:text-7xl text-aiwass-text uppercase tracking-tight mb-4">
                         {t.instagram?.title || 'INSTAGRAM'}
                     </h2>
 
-                    <p className="font-mono text-sm text-daez-paper/60 max-w-md mx-auto">
+                    <p className="font-mono text-sm text-aiwass-text/60 max-w-md mx-auto">
                         {t.instagram?.subtitle || 'TRANSMISIONES DESDE EL CAOS VISUAL'}
                     </p>
-
-                    {/* Demo Mode Indicator */}
-                    {isDemo && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="mt-4"
-                        >
-                            <span className="font-mono text-[10px] text-daez-rust uppercase tracking-wider">
-                                [ MODO DEMO - CONECTA BEHOLD.SO PARA VER TU FEED ]
-                            </span>
-                        </motion.div>
-                    )}
                 </motion.div>
 
-                {/* Instagram Grid */}
-                {loading ? (
-                    <div className="flex justify-center items-center h-64">
-                        <div className="w-8 h-8 border-2 border-daez-blood border-t-transparent rounded-full animate-spin" />
-                    </div>
-                ) : (
-                    <motion.div
-                        className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ staggerChildren: 0.1 }}
-                    >
-                        {posts.map((post, index) => (
-                            <InstagramPostCard key={post.id} post={post} index={index} />
-                        ))}
-                    </motion.div>
-                )}
+                {/* Instagram Grid via Behold Widget */}
+                <div className="max-w-4xl mx-auto relative z-10 border-2 border-[#3F04BF]/40 bg-black/60 p-4 md:p-6 shadow-2xl">
+                    {/* @ts-ignore */}
+                    <behold-widget feed-id={beholdFeedId}></behold-widget>
+                </div>
 
                 {/* CTA Button */}
                 <motion.div
@@ -195,10 +116,10 @@ export const InstagramFeed: React.FC<InstagramFeedProps> = ({
                     transition={{ delay: 0.3 }}
                 >
                     <a
-                        href="https://instagram.com/emavisual"
+                        href="https://instagram.com/aiwass.studio"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-3 font-mono text-sm text-daez-paper border-2 border-daez-paper px-6 py-3 hover:bg-daez-blood hover:border-daez-blood hover:text-daez-ink transition-all duration-300"
+                        className="group inline-flex items-center gap-3 font-mono text-sm text-aiwass-text border-2 border-aiwass-text px-6 py-3 hover:bg-aiwass-purple hover:border-aiwass-purple hover:text-white transition-all duration-300"
                     >
                         <span className="uppercase tracking-wider">
                             {t.instagram?.followButton || 'SEGUIR EN INSTAGRAM'}
@@ -215,120 +136,13 @@ export const InstagramFeed: React.FC<InstagramFeedProps> = ({
             </div>
 
             {/* Decorative Elements */}
-            <div className="absolute top-8 left-8 font-mono text-[10px] text-daez-paper/30 tracking-widest">
+            <div className="absolute top-8 left-8 font-mono text-[10px] text-aiwass-text/30 tracking-widest">
                 FEED://INSTAGRAM
             </div>
-            <div className="absolute bottom-8 right-8 font-mono text-[10px] text-daez-paper/30 tracking-widest">
+            <div className="absolute bottom-8 right-8 font-mono text-[10px] text-aiwass-text/30 tracking-widest">
                 V.2026.01
             </div>
         </section>
-    );
-};
-
-// Individual Post Card with Grindhouse Effects
-const InstagramPostCard: React.FC<{ post: InstagramPost; index: number }> = ({ post, index }) => {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-        <motion.a
-            href={post.permalink}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="relative aspect-square overflow-hidden group cursor-pointer border-2 border-daez-paper/10 hover:border-daez-blood transition-colors duration-300"
-        >
-            {/* Image with Grindhouse Filter */}
-            <motion.div
-                className="absolute inset-0"
-                animate={{
-                    scale: isHovered ? 1.1 : 1,
-                    filter: isHovered
-                        ? 'grayscale(0%) contrast(120%) saturate(120%)'
-                        : 'grayscale(60%) contrast(110%) saturate(80%)'
-                }}
-                transition={{ duration: 0.4 }}
-            >
-                <img
-                    src={post.mediaUrl}
-                    alt={post.caption || 'Instagram post'}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                />
-            </motion.div>
-
-            {/* Halftone Overlay */}
-            <div
-                className="absolute inset-0 pointer-events-none mix-blend-multiply opacity-30 transition-opacity duration-300 group-hover:opacity-10"
-                style={{
-                    backgroundImage: 'radial-gradient(circle, #121212 1px, transparent 1px)',
-                    backgroundSize: '4px 4px'
-                }}
-            />
-
-            {/* Scan Lines Effect */}
-            <div
-                className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-10 transition-opacity"
-                style={{
-                    background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px)'
-                }}
-            />
-
-            {/* Green Tint Overlay on Hover */}
-            <motion.div
-                className="absolute inset-0 bg-daez-blood pointer-events-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isHovered ? 0.15 : 0 }}
-                transition={{ duration: 0.3 }}
-            />
-
-            {/* Caption Overlay */}
-            <motion.div
-                className="absolute inset-0 flex items-end justify-start p-3 pointer-events-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isHovered ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-            >
-                <div className="bg-daez-ink/90 px-2 py-1">
-                    <span className="font-mono text-[10px] text-daez-blood uppercase tracking-wider">
-                        {post.caption?.slice(0, 30) || 'VIEW POST'}
-                        {(post.caption?.length || 0) > 30 && '...'}
-                    </span>
-                </div>
-            </motion.div>
-
-            {/* Corner Marks (Film Frame Effect) */}
-            <div className="absolute top-1 left-1 w-3 h-3 border-l border-t border-daez-paper/30 group-hover:border-daez-blood transition-colors" />
-            <div className="absolute top-1 right-1 w-3 h-3 border-r border-t border-daez-paper/30 group-hover:border-daez-blood transition-colors" />
-            <div className="absolute bottom-1 left-1 w-3 h-3 border-l border-b border-daez-paper/30 group-hover:border-daez-blood transition-colors" />
-            <div className="absolute bottom-1 right-1 w-3 h-3 border-r border-b border-daez-paper/30 group-hover:border-daez-blood transition-colors" />
-
-            {/* Glitch Effect on Hover */}
-            {isHovered && (
-                <>
-                    <motion.div
-                        className="absolute inset-0 bg-red-500/10 pointer-events-none"
-                        animate={{
-                            x: [0, -2, 2, 0],
-                            opacity: [0, 0.3, 0.3, 0]
-                        }}
-                        transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 0.5 }}
-                    />
-                    <motion.div
-                        className="absolute inset-0 bg-cyan-500/10 pointer-events-none"
-                        animate={{
-                            x: [0, 2, -2, 0],
-                            opacity: [0, 0.3, 0.3, 0]
-                        }}
-                        transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 0.5, delay: 0.1 }}
-                    />
-                </>
-            )}
-        </motion.a>
     );
 };
 

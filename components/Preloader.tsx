@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const logos = [
-    '/assets/loader/logo-ema1.webp',
-    '/assets/loader/logo-ema2.webp',
-    '/assets/loader/logo-ema3.webp'
-];
-
 interface PreloaderProps {
     onLoadComplete: () => void;
 }
+
+const LOGOS = [
+    { url: '/assets/aiwass-logotipo.svg', aspect: 'aspect-[381/163]' },
+    { url: '/assets/aiwass-isotipo.svg', aspect: 'aspect-square' },
+    { url: '/assets/stamp.svg', aspect: 'aspect-square' },
+    { url: '/assets/Ema-logo.svg', aspect: 'aspect-[987/423]' }
+];
 
 const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
     const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
@@ -18,28 +19,25 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
     const showVideo = useMemo(() => {
         if (typeof window === 'undefined') return false;
 
-        // Check for mobile device
         const isMobile = window.innerWidth < 768 ||
             /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-        // Check for slow connection
         const connection = (navigator as any).connection;
         const isSlowConnection = connection &&
             (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
 
-        // Check for reduced motion preference
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         return !isMobile && !isSlowConnection && !prefersReducedMotion;
     }, []);
 
     useEffect(() => {
-        // Cycle through logos every 600ms
+        // Cycle through the 4 logos every 600ms
         const logoInterval = setInterval(() => {
-            setCurrentLogoIndex((prev) => (prev + 1) % logos.length);
+            setCurrentLogoIndex((prev) => (prev + 1) % 4);
         }, 600);
 
-        // Complete preloader after 2.4 seconds (4 full cycles)
+        // Complete preloader after 2.4 seconds (1 full cycle of 4 logos)
         const completeTimeout = setTimeout(() => {
             onLoadComplete();
         }, 2400);
@@ -52,7 +50,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
 
     return (
         <motion.div
-            className="fixed inset-0 z-[9999] bg-daez-ink flex items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[9999] bg-aiwass-bg flex items-center justify-center overflow-hidden"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
@@ -76,16 +74,22 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
 
             <div className="relative z-10 w-64 h-64 flex items-center justify-center">
                 <AnimatePresence mode="wait">
-                    <motion.img
+                    <motion.div
                         key={currentLogoIndex}
-                        src={logos[currentLogoIndex]}
-                        alt="Loading"
-                        className="absolute w-full h-full object-contain"
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        className="absolute w-full h-full flex items-center justify-center text-aiwass-purple px-6"
+                        initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 1.1 }}
+                        exit={{ opacity: 0, scale: 1.2 }}
                         transition={{ duration: 0.4 }}
-                    />
+                    >
+                        <div 
+                            className={`w-full max-w-[85%] max-h-[85%] bg-current ${LOGOS[currentLogoIndex].aspect}`}
+                            style={{
+                                mask: `url(${LOGOS[currentLogoIndex].url}) no-repeat center / contain`,
+                                WebkitMask: `url(${LOGOS[currentLogoIndex].url}) no-repeat center / contain`
+                            }}
+                        />
+                    </motion.div>
                 </AnimatePresence>
             </div>
 
@@ -96,4 +100,3 @@ const Preloader: React.FC<PreloaderProps> = ({ onLoadComplete }) => {
 };
 
 export default Preloader;
-

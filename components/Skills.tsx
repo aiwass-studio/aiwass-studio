@@ -27,7 +27,7 @@ const Skills: React.FC<SkillsProps> = ({ language }) => {
     };
 
     return (
-        <section id="skills" className="py-24 px-4 md:px-12 bg-daez-ink text-daez-paper relative overflow-hidden">
+        <section id="skills" className="py-24 px-4 md:px-12 bg-[#121212] text-aiwass-text relative overflow-hidden">
 
             {/* Video Background */}
             <div className="absolute inset-0 z-0">
@@ -50,7 +50,7 @@ const Skills: React.FC<SkillsProps> = ({ language }) => {
 
                     {/* Skills Column */}
                     <div className="space-y-12">
-                        <h3 className="font-display text-4xl text-[#2CFF05]">{t.section1}</h3>
+                        <h3 className="font-display text-4xl text-aiwass-purple">{t.section1}</h3>
                         <div className="space-y-8">
                             {t.list1.map((skill: any, index: number) => (
                                 <div key={index}>
@@ -63,7 +63,7 @@ const Skills: React.FC<SkillsProps> = ({ language }) => {
                                             whileInView={{ width: `${skill.level}%` }}
                                             transition={{ duration: 1.5, ease: "easeOut", delay: index * 0.1 }}
                                             viewport={{ once: true }}
-                                            className="h-full bg-[#2CFF05] relative"
+                                            className="h-full bg-aiwass-purple relative"
                                         >
                                             {/* Glitch stripes */}
                                             <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_2px,#000_2px,#000_4px)] opacity-10"></div>
@@ -76,7 +76,7 @@ const Skills: React.FC<SkillsProps> = ({ language }) => {
 
                     {/* Tools Column */}
                     <div className="space-y-12">
-                        <h3 className="font-display text-4xl text-[#2CFF05]">{t.section2}</h3>
+                        <h3 className="font-display text-4xl text-aiwass-red">{t.section2}</h3>
                         <div className="space-y-8">
                             {t.list2.map((tool: any, index: number) => (
                                 <div key={index}>
@@ -92,10 +92,10 @@ const Skills: React.FC<SkillsProps> = ({ language }) => {
                                             whileInView={{ width: `${tool.level}%` }}
                                             transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 + (index * 0.1) }}
                                             viewport={{ once: true }}
-                                            className="h-full bg-white relative"
+                                            className="h-full bg-aiwass-text relative"
                                         >
                                             {/* Glitch stripes */}
-                                            <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_2px,#2CFF05_2px,#2CFF05_4px)] opacity-20"></div>
+                                            <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_2px,#F21B42_2px,#F21B42_4px)] opacity-20"></div>
                                         </motion.div>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@ const Skills: React.FC<SkillsProps> = ({ language }) => {
             </div>
 
             {/* Background Decor */}
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#2CFF05] rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-64 h-64 bg-aiwass-purple rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
         </section>
     );
 };

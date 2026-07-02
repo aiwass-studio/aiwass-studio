@@ -97,7 +97,7 @@ function InteractiveGeometry() {
             <mesh ref={meshRef} position={[0, 0, -3]}>
                 <icosahedronGeometry args={[2, 1]} />
                 <meshBasicMaterial
-                    color="#2CFF05"
+                    color="#3F04BF"
                     wireframe
                     transparent
                     opacity={0.08}
