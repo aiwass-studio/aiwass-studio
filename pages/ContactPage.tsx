@@ -142,7 +142,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
                       TIKTOK
                     </a>
                     <a 
-                      href="https://behance.net" 
+                      href="https://www.behance.net/emavisual" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="border border-[#3F04BF]/30 hover:border-[#F21B42] hover:bg-[#F21B42]/5 text-center py-2.5 font-mono text-[10px] tracking-widest uppercase transition-colors"

@@ -18,7 +18,7 @@ export const LinksPage: React.FC<LinksPageProps> = ({ language }) => {
 
   const externalLinks = [
     { label: 'Secure Support (WhatsApp)', url: 'https://wa.me/19453981995' },
-    { label: 'Creative Archive (Behance)', url: 'https://www.behance.net/daezdigital' }
+    { label: 'Creative Archive (Behance)', url: 'https://www.behance.net/emavisual' }
   ];
 
   return (
