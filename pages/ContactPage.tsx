@@ -41,7 +41,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch('https://hook.us2.make.com/5py929fangs2w6ra3xyvuey9m44y15v0', {
+      const response = await fetch(import.meta.env.VITE_MAKE_WEBHOOK_URL || '', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
