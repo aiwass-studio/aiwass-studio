@@ -15,7 +15,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ language }) => {
       id: '01',
       titleKey: 'tier1_title' as const,
       descKey: 'tier1_desc' as const,
-      price: '$1,200 USD',
+      price: isIt ? '290 €' : '$290 USD',
       deliverables: isEs 
         ? ['Logotipos Primarios y Secundarios', 'Manual de Identidad Visual', 'Asset Pack Gráfico e Iconografía', 'Dirección de Arte & Estrategia', 'Archivos Finales Vectoriales', 'Aplicaciones Físicas y Mockups']
         : isIt
@@ -26,7 +26,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ language }) => {
       id: '02',
       titleKey: 'tier2_title' as const,
       descKey: 'tier2_desc' as const,
-      price: '$1,800 USD',
+      price: isIt ? '660 €' : '$660 USD',
       deliverables: isEs
         ? ['Diseño de Interfaz UI/UX a Medida', 'Desarrollo Frontend React / Vite', 'Estilos Modernos con Tailwind CSS', 'Animaciones de Scroll Avanzadas', 'Optimización de LCP y SEO Técnico', 'Integración de APIs y Formulación']
         : isIt
@@ -37,7 +37,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ language }) => {
       id: '03',
       titleKey: 'tier3_title' as const,
       descKey: 'tier3_desc' as const,
-      price: '$3,200 USD',
+      price: isIt ? '2,100 €' : '$2,100 USD',
       deliverables: isEs
         ? ['Sistema de Identidad de Marca Completo', 'Desarrollo Web & Código a Medida', 'Cápsula de Indumentaria Streetwear', 'Fichas Técnicas para Taller (Tech Packs)', 'Sincronía Digital-Física Absoluta', 'Dirección de Arte y Asesoramiento 1-on-1']
         : isIt
