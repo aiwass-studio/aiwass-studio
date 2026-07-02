@@ -166,7 +166,9 @@ export const translations = {
         budget_tier2: "Nivel de Arquitectura Digital [$1,800+ USD]",
         budget_tier3: "Ecosistema del Monolito Total [$3,200+ USD]",
         contact_submit: "ENVIAR A PRODUCCIÓN",
-        contact_success: "APROBADO PARA PRODUCCIÓN. NOS COMUNICAREMOS EN 24 HORAS."
+        contact_success: "APROBADO PARA PRODUCCIÓN. NOS COMUNICAREMOS EN 24 HORAS.",
+        links_title: "AIWASS STUDIO",
+        links_tagline: "Branding Alternativo • Desarrollo Web a Código • Streetwear. Selecciona un destino para ingresar al archivo de ejecución colectiva."
     },
     en: {
         nav: {
@@ -334,7 +336,9 @@ export const translations = {
         budget_tier2: "Digital Architecture Tier [$1,800+ USD]",
         budget_tier3: "The Total Monolith Ecosystem [$3,200+ USD]",
         contact_submit: "SUBMIT FOR PRODUCTION",
-        contact_success: "APPROVED FOR PRODUCTION. WE WILL CONTACT YOU IN 24 HOURS."
+        contact_success: "APPROVED FOR PRODUCTION. WE WILL CONTACT YOU IN 24 HOURS.",
+        links_title: "AIWASS STUDIO",
+        links_tagline: "Alternative Branding • Custom Web Dev • Streetwear. Select a destination to enter the collective execution archive."
     },
     it: {
         nav: {
@@ -502,7 +506,9 @@ export const translations = {
         budget_tier2: "Livello di Architettura Digitale [$1,800+ USD]",
         budget_tier3: "Ecosistema del Monolito Totale [$3,200+ USD]",
         contact_submit: "INVIA PER LA PRODUZIONE",
-        contact_success: "APPROVATO PER LA PRODUZIONE. VI CONTATTEREMO ENTRO 24 ORE."
+        contact_success: "APPROVATO PER LA PRODUZIONE. VI CONTATTEREMO ENTRO 24 ORE.",
+        links_title: "AIWASS STUDIO",
+        links_tagline: "Branding Alternativo • Sviluppo Web su Codice • Streetwear. Seleziona una destinazione per accedere all'archivio di esecuzione collettiva."
     }
 };
 

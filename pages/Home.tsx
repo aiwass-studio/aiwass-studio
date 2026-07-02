@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslation } from "react-i18next";
@@ -51,24 +51,24 @@ const letterVariants = {
 export function Hero({ language }: { language: Language }) {
   const t = translations[language].hero;
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  // Frame sequence calculation
-  const totalFrames = 179;
-  const getFramePath = (index: number) => {
-    const paddedIndex = String(index).padStart(5, '0');
-    return `/hero-frames/Hero_${paddedIndex}.jpg`;
-  };
+  const [videoPreload, setVideoPreload] = useState<'none' | 'auto'>('none');
 
   useEffect(() => {
-    const img = imgRef.current;
-    if (!img) return;
+    // IntersectionObserver to lazy load the video
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVideoPreload('auto');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.05 }
+    );
 
-    // Preload images into browser cache to prevent flickering
-    for (let i = 0; i < totalFrames; i++) {
-      const preloadImg = new Image();
-      preloadImg.src = getFramePath(i);
+    if (wrapperRef.current) {
+      observer.observe(wrapperRef.current);
     }
 
     let tl: gsap.core.Timeline | null = null;
@@ -84,43 +84,36 @@ export function Hero({ language }: { language: Language }) {
           pin: true,      // Lock viewport to run animation
           scrub: true,    // Direct sync with scroll position
           onUpdate: (self) => {
-            // Sync frame synchronously on scroll, matching original video.currentTime logic
-            const activeFrame = Math.round(self.progress * (totalFrames - 1));
-            img.src = getFramePath(activeFrame);
+            const video = videoRef.current;
+            if (video && video.duration) {
+              const targetTime = self.progress * video.duration;
+              // Safe time bounding to prevent flicker
+              video.currentTime = Math.min(Math.max(targetTime, 0), video.duration - 0.02);
+            }
           }
         }
       });
 
-      // Fade out text block on scroll (identical to original)
+      // Fade out text block on scroll
       tl.to(
         contentRef.current,
         { y: -60, opacity: 0, ease: "power1.out" },
         0
       );
 
-      // Force ScrollTrigger to refresh and recalculate layout positions
       ScrollTrigger.refresh();
     };
 
-    // Wait for the first image to be loaded (complete or onload), matching loadedmetadata logic
-    const firstImgPath = getFramePath(0);
-    const testImg = new Image();
-    testImg.src = firstImgPath;
-    
-    if (testImg.complete) {
-      initScrollTrigger();
-    } else {
-      testImg.onload = initScrollTrigger;
-      testImg.onerror = initScrollTrigger; // fallback if image fails to load
-    }
+    initScrollTrigger();
 
-    // Refresh after a slight delay to ensure all other components (like InstagramFeed) have finished rendering
+    // Refresh after a slight delay to ensure correct heights
     const refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 500);
 
     return () => {
       clearTimeout(refreshTimer);
+      observer.disconnect();
       if (tl) {
         tl.kill();
         if (tl.scrollTrigger) tl.scrollTrigger.kill();
@@ -132,13 +125,26 @@ export function Hero({ language }: { language: Language }) {
     <div ref={wrapperRef} id="hero" className="relative w-full h-screen bg-[#0A0A0A] p-2 md:p-3 flex flex-col overflow-visible">
       <section className="relative w-full h-full bg-[#0A0A0A] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden flex items-center shadow-2xl border border-[#3F04BF]/30">
         
-        {/* El archivo de imagen secuencial de Aiwass Studio */}
-        <img 
-          ref={imgRef}
-          src="/hero-frames/Hero_00000.jpg"
-          alt="Hero animation frame"
-          className="absolute inset-0 z-0 w-full h-full object-cover opacity-100"
+        {/* Local Video Element */}
+        <video
+          ref={videoRef}
+          src="/assets/hero.mp4"
+          preload={videoPreload}
+          playsInline
+          muted
+          autoPlay
+          controls={false}
+          className="absolute inset-0 z-0 w-full h-full object-cover opacity-100 grayscale contrast-125"
         />
+
+        {/* Fallback image if video is not preloaded */}
+        {videoPreload === 'none' && (
+          <img
+            src="/assets/hero-emavisual.webp"
+            alt="Hero fallback background"
+            className="absolute inset-0 z-0 w-full h-full object-cover grayscale contrast-125 opacity-70"
+          />
+        )}
 
         {/* Capa de Información del Hero */}
         <div ref={contentRef} className="relative flex flex-col items-start text-left max-w-2xl justify-center h-full pl-6 md:pl-16 z-10 w-full md:w-3/5 pointer-events-none">

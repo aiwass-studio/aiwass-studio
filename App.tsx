@@ -8,6 +8,7 @@ import WorkPage from './pages/WorkPage';
 import PricingPage from './pages/PricingPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import LinksPage from './pages/LinksPage';
 import Footer from './components/Footer';
 import { translations, Language } from './translations';
 import { AiwassLogo } from './components/AiwassLogo';
@@ -202,6 +203,7 @@ function App() {
               <Route path="/pricing" element={<PricingPage language={language} />} />
               <Route path="/about" element={<AboutPage language={language} />} />
               <Route path="/contact" element={<ContactPage language={language} />} />
+              <Route path="/links" element={<LinksPage language={language} />} />
             </Routes>
           </main>
 

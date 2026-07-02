@@ -75,7 +75,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ language }) => {
                 <div className="absolute bottom-1 right-2.5 font-mono text-[8px] text-[#3F04BF]/70 group-hover:text-[#F21B42]/70 transition-colors z-20">[ AIWASS STUDIO ]</div>
                 <div className="w-full h-full overflow-hidden relative">
                   <img 
-                    src="/assets/about/about-studio.jpg" 
+                    src="/assets/about/about-studio.webp" 
                     alt="Ema Craist // Aiwass Studio" 
                     className="w-full h-full object-cover filter contrast-125 brightness-95 grayscale hover:grayscale-0 transition-all duration-750 ease-out transform scale-105 hover:scale-100"
                   />
@@ -157,13 +157,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ language }) => {
                   <div className="absolute top-1 left-2 font-mono text-[8px] text-[#3F04BF]/70 group-hover:text-[#F21B42]/70 z-20">// STAGE_SESSION.RAW</div>
                   <div className="w-full h-full overflow-hidden relative border border-[#3F04BF]/20">
                     <img 
-                      src="/assets/about/about-analog-1.jpg" 
+                      src="/assets/about/about-analog-1.webp" 
                       alt="Ema Craist drumming live" 
                       className="w-full h-full object-cover filter grayscale contrast-120 brightness-95 hover:grayscale-0 transition-all duration-750 ease-out hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
                     <span className="absolute bottom-1.5 left-3 font-mono text-[8px] text-[#F2EFE9]/85">
-                      // PHYSICAL_DRUMS_STAGE_2018.JPG
+                      // PHYSICAL_DRUMS_STAGE_2018.WEBP
                     </span>
                   </div>
                 </div>
@@ -173,13 +173,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ language }) => {
                   <div className="absolute top-1 left-2 font-mono text-[8px] text-[#3F04BF]/70 group-hover:text-[#F21B42]/70 z-20">// REHEARSAL_SESSION.RAW</div>
                   <div className="w-full h-full overflow-hidden relative border border-[#3F04BF]/20">
                     <img 
-                      src="/assets/about/about-analog-2.jpg" 
+                      src="/assets/about/about-analog-2.webp" 
                       alt="Ema Craist drumming rehearsal" 
                       className="w-full h-full object-cover filter grayscale contrast-120 brightness-95 hover:grayscale-0 transition-all duration-750 ease-out hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
                     <span className="absolute bottom-1.5 left-3 font-mono text-[8px] text-[#F2EFE9]/85">
-                      // PHYSICAL_DRUMS_STUDIO_2018.JPG
+                      // PHYSICAL_DRUMS_STUDIO_2018.WEBP
                     </span>
                   </div>
                 </div>
